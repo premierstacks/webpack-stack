@@ -16,15 +16,26 @@
  * - Sponsor & License: https://github.com/sponsors/tomchochola
  */
 
-import * as dev from './dev.js';
-import * as env from './env.js';
+export function serve(env) {
+  return env.WEBPACK_SERVE || false;
+}
 
-export { default as browser } from './browser.js';
-export { default as browserTs } from './browser_ts.js';
-export { default as chunks } from './chunks.js';
-export { default as copy } from './copy.js';
-export { default as html } from './html.js';
-export { default as library } from './library.js';
-export { default as reactTs } from './react_ts.js';
-export { dev };
-export { env };
+export function build(env) {
+  return env.WEBPACK_BUILD || false;
+}
+
+export function watch(env) {
+  return env.WEBPACK_WATCH || false;
+}
+
+export function mode(env, argv) {
+  return argv.mode || argv.nodeEnv || 'production';
+}
+
+export function development(env, argv) {
+  return mode(env, argv) === 'development';
+}
+
+export function production(env, argv) {
+  return mode(env, argv) === 'production';
+}

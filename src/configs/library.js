@@ -16,14 +16,8 @@
  * - Sponsor & License: https://github.com/sponsors/tomchochola
  */
 
-import html from './html.js';
-
 export default function (env, argv, config, library) {
   config.output.library = library;
-
-  if (env.WEBPACK_SERVE) {
-    html(env, argv, config, './node_modules/@tomchochola/webpack-config/assets/index.html', 'index.html');
-  }
 
   return config;
 }
