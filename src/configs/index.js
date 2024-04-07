@@ -16,9 +16,6 @@
  * - Sponsor & License: https://github.com/sponsors/tomchochola
  */
 
-import * as dev from './dev.js';
-import * as env from './env.js';
-
 export { default as browser } from './browser.js';
 export { default as browserTs } from './browser_ts.js';
 export { default as chunks } from './chunks.js';
@@ -26,5 +23,5 @@ export { default as copy } from './copy.js';
 export { default as html } from './html.js';
 export { default as library } from './library.js';
 export { default as reactTs } from './react_ts.js';
-export { dev };
-export { env };
+export * as dev from './dev.js';
+export * as env from './env.js';
