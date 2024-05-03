@@ -1,4 +1,4 @@
-# [Webpack Config](https://github.com/tomchochola/webpack-config) by [Tomáš Chochola](https://github.com/tomchochola)
+# [Webpack Config](https://github.com/premierstacks/webpack-config) by [Tomáš Chochola](https://github.com/tomchochola)
 
 Optimize your web development with our Webpack Config: a comprehensive suite designed for efficiency and advanced functionality in modern web projects. Perfect for streamlining your build process.
 
@@ -81,7 +81,7 @@ Secure your license at [Tomáš Chochola's GitHub Sponsors page](https://github.
 ### 2️⃣ Package Installation
 
 ```shell
-npm install --save-dev github:tomchochola/webpack-config
+npm install --save-dev github:premierstacks/webpack-config
 ```
 
 ### 3️⃣ Configuration
@@ -89,7 +89,7 @@ npm install --save-dev github:tomchochola/webpack-config
 Initialize your `webpack.config.js`:
 
 ```js
-import { configs } from '@tomchochola/webpack-config';
+import { configs } from '@premierstacks/webpack-config';
 
 export default function (env, argv) {
   const config = configs.browserTs(env, argv, ['./src/index.ts', './src/index.scss']);

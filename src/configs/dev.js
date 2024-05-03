@@ -18,7 +18,7 @@
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-export function html(env, argv, config, template = './node_modules/@tomchochola/webpack-config/assets/index.html', filename = 'index.html', xhtml = true) {
+export function html(env, argv, config, template = './node_modules/@premierstacks/webpack-config/assets/index.html', filename = 'index.html', xhtml = true) {
   config.plugins.push(
     new HtmlWebpackPlugin({
       template: template,

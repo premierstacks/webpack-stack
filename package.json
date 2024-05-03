@@ -1,14 +1,14 @@
 {
-  "name": "@tomchochola/webpack-config",
+  "name": "@premierstacks/webpack-config",
   "description": "webpack config",
   "keywords": [
-    "tomchochola",
+    "premierstacks",
     "webpack-config"
   ],
-  "homepage": "https://github.com/tomchochola/webpack-config",
+  "homepage": "https://github.com/premierstacks/webpack-config",
   "bugs": {
     "email": "chocholatom1997@gmail.com",
-    "url": "https://github.com/tomchochola/webpack-config/issues"
+    "url": "https://github.com/premierstacks/webpack-config/issues"
   },
   "license": "SEE LICENSE IN ./LICENSE.md",
   "author": {
@@ -30,7 +30,7 @@
   "main": "./src/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tomchochola/webpack-config.git"
+    "url": "https://github.com/premierstacks/webpack-config.git"
   },
   "dependencies": {
     "copy-webpack-plugin": "^12.0.2",
@@ -54,8 +54,8 @@
     "webpack-dev-server": "^5.0.2"
   },
   "devDependencies": {
-    "@tomchochola/eslint-config": "github:tomchochola/eslint-config",
-    "@tomchochola/prettier-config": "github:tomchochola/prettier-config"
+    "@premierstacks/eslint-config": "github:premierstacks/eslint-config",
+    "@premierstacks/prettier-config": "github:premierstacks/prettier-config"
   },
   "private": true,
   "type": "module"
