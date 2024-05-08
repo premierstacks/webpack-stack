@@ -3,7 +3,8 @@
   "description": "webpack config",
   "keywords": [
     "premierstacks",
-    "webpack-config"
+    "webpack-config",
+    "tomchochola"
   ],
   "homepage": "https://github.com/premierstacks/webpack-config",
   "bugs": {
