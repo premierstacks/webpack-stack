@@ -79,7 +79,7 @@ export default function (env, argv, entry = ['./src/index.ts', './src/index.scss
           type: 'asset/resource',
         },
         {
-          test: /\.(html)$/i,
+          test: /\.(html|php)$/i,
           use: [
             {
               loader: 'html-loader',
