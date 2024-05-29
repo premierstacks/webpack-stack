@@ -1,16 +1,16 @@
-# [Webpack Config](https://github.com/premierstacks/webpack-config) by [Tomáš Chochola](https://github.com/tomchochola)
+# [Webpack Stack](https://github.com/premierstacks/webpack-stack) by [Tomáš Chochola](https://github.com/tomchochola)
 
-Optimize your web development with our Webpack Config: a comprehensive suite designed for efficiency and advanced functionality in modern web projects. Perfect for streamlining your build process.
+Optimize your web development with our Webpack Stack: a comprehensive suite designed for efficiency and advanced functionality in modern web projects. Perfect for streamlining your build process.
 
-Our Webpack Config equips you with a premium suite of configurations, incorporating the latest Webpack features and plugins to enhance your development and build processes. Tailored for rapid integration, it ensures optimal performance from development to production, offering a strategic asset for your web applications. This package is a result of extensive research and expertise, providing a streamlined setup that boosts development efficiency. With configurations for different environments and project types, including advanced asset handling and flexible presets, our Webpack Config is an essential tool for developers aiming for high-quality web applications.
+Our Webpack Stack equips you with a premium suite of configurations, incorporating the latest Webpack features and plugins to enhance your development and build processes. Tailored for rapid integration, it ensures optimal performance from development to production, offering a strategic asset for your web applications. This package is a result of extensive research and expertise, providing a streamlined setup that boosts development efficiency. With configurations for different environments and project types, including advanced asset handling and flexible presets, our Webpack Stack is an essential tool for developers aiming for high-quality web applications.
 
-## 👌 Top Reasons to Opt for Our Premium Webpack Config
+## 👌 Top Reasons to Opt for Our Premium Webpack Stack
 
-By incorporating our Premium Webpack Config into your development toolkit, you're not just optimizing your build process; you're adopting a strategic asset that enhances development efficiency, ensures optimal performance, and sets your web applications apart in the digital landscape.
+By incorporating our Premium Webpack Stack into your development toolkit, you're not just optimizing your build process; you're adopting a strategic asset that enhances development efficiency, ensures optimal performance, and sets your web applications apart in the digital landscape.
 
 ### ⏱️ Setup in Just 5 Minutes
 
-Jumpstart your web development projects with our premium Webpack Config, crafted for swift integration. This comprehensive suite ensures you're equipped with the latest Webpack features and plugins, streamlining your setup process and getting you ready for development in no time.
+Jumpstart your web development projects with our premium Webpack Stack, crafted for swift integration. This comprehensive suite ensures you're equipped with the latest Webpack features and plugins, streamlining your setup process and getting you ready for development in no time.
 
 ### 🕒 Hundreds of Hours of Research, So You Don't Have To
 
@@ -18,23 +18,23 @@ Leverage our extensive research and expertise in Webpack's ecosystem, encapsulat
 
 ### 🎚️ Minimal Setup, Maximum Efficiency
 
-Dive into your projects with configurations designed for efficiency. From development to production, our Webpack Config is optimized for speed, performance, and ease of use, ensuring your workflow is seamless and your builds are fast.
+Dive into your projects with configurations designed for efficiency. From development to production, our Webpack Stack is optimized for speed, performance, and ease of use, ensuring your workflow is seamless and your builds are fast.
 
 ### 📘 Zero Expertise Required
 
-Our Webpack Config is engineered for accessibility, making advanced Webpack features and optimizations available to developers of all skill levels. With minimal need for manual tweaking, you can achieve professional-grade results without being a Webpack expert.
+Our Webpack Stack is engineered for accessibility, making advanced Webpack features and optimizations available to developers of all skill levels. With minimal need for manual tweaking, you can achieve professional-grade results without being a Webpack expert.
 
 ### 🔄 Continuously Updated
 
-Stay at the forefront of web development with a Webpack configuration that evolves. We regularly update our suite to include the latest Webpack enhancements and plugins, keeping your projects cutting-edge and compliant with modern web standards.
+Stay at the forefront of web development with a Webpack Stackuration that evolves. We regularly update our suite to include the latest Webpack enhancements and plugins, keeping your projects cutting-edge and compliant with modern web standards.
 
 ### ⚔️ Battle-Tested Reliability
 
-Trust in a Webpack Config that's been rigorously tested across diverse web development projects. Whether you're building a simple static site or a complex web application, our configurations provide a reliable foundation for your build process, ensuring consistency and quality in your outputs.
+Trust in a Webpack Stack that's been rigorously tested across diverse web development projects. Whether you're building a simple static site or a complex web application, our configurations provide a reliable foundation for your build process, ensuring consistency and quality in your outputs.
 
 ### 🏆 Premier Quality Guarantee
 
-Opting for our Webpack Config signifies a commitment to excellence in web development. This suite is more than a set of configurations; it's a comprehensive solution that elevates your development and build processes, ensuring your projects are built on a foundation of quality and innovation.
+Opting for our Webpack Stack signifies a commitment to excellence in web development. This suite is more than a set of configurations; it's a comprehensive solution that elevates your development and build processes, ensuring your projects are built on a foundation of quality and innovation.
 
 ## 🛡️ License & Usage
 
@@ -81,7 +81,7 @@ Secure your license at [Tomáš Chochola's GitHub Sponsors page](https://github.
 ### 2️⃣ Package Installation
 
 ```shell
-npm install --save-dev github:premierstacks/webpack-config
+npm install --save-dev github:premierstacks/webpack-stack
 ```
 
 ### 3️⃣ Configuration
@@ -89,7 +89,7 @@ npm install --save-dev github:premierstacks/webpack-config
 Initialize your `webpack.config.js`:
 
 ```js
-import { configs } from '@premierstacks/webpack-config';
+import { configs } from '@premierstacks/webpack-stack';
 
 export default function (env, argv) {
   const config = configs.browserTs(env, argv, ['./src/index.ts', './src/index.scss']);

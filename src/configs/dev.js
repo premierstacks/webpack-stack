@@ -9,18 +9,17 @@
  * The full license terms are detailed in the LICENSE.md file within the source code repository.
  * The terms are subject to changes. Users are encouraged to review them periodically.
  *
- * Tomáš Chochola: The Creator, Proprietor & Project Visionary
+ * 🤵 The Proprietor: Tomáš Chochola
+ * - Role: The Creator, Proprietor & Project Visionary
  * - Email: chocholatom1997@gmail.com
  * - GitHub: https://github.com/tomchochola
  * - Sponsor & License: https://github.com/sponsors/tomchochola
- *
- * Premierstacks: The Organization
- * - GitHub: https://github.com/premierstacks
+ * - Web: https://premierstacks.com
  */
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-export function html(env, argv, config, template = './node_modules/@premierstacks/webpack-config/assets/index.html', filename = 'index.html', xhtml = true) {
+export function html(env, argv, config, template = './node_modules/@premierstacks/webpack-stack/assets/index.html', filename = 'index.html', xhtml = true) {
   config.plugins.push(
     new HtmlWebpackPlugin({
       template: template,
