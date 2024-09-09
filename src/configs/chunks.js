@@ -17,7 +17,7 @@
  * - Web: https://premierstacks.com
  */
 
-export function chunks(env, argv, config) {
+function chunks(env, argv, config) {
   config.optimization.runtimeChunk = 'single';
 
   config.optimization.splitChunks = {
@@ -33,3 +33,5 @@ export function chunks(env, argv, config) {
 
   return config;
 }
+
+export { chunks };

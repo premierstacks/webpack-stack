@@ -19,7 +19,7 @@
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-export function html(env, argv, config, template = './node_modules/@premierstacks/webpack-stack/assets/index.html', filename = 'index.html', xhtml = true) {
+function html(env, argv, config, template = './node_modules/@premierstacks/webpack-stack/assets/index.html', filename = 'index.html', xhtml = true) {
   config.plugins.push(
     new HtmlWebpackPlugin({
       template: template,
@@ -30,3 +30,5 @@ export function html(env, argv, config, template = './node_modules/@premierstack
 
   return config;
 }
+
+export { html };

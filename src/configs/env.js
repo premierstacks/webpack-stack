@@ -17,26 +17,28 @@
  * - Web: https://premierstacks.com
  */
 
-export function serve(env) {
+function serve(env) {
   return env.WEBPACK_SERVE || false;
 }
 
-export function build(env) {
+function build(env) {
   return env.WEBPACK_BUILD || false;
 }
 
-export function watch(env) {
+function watch(env) {
   return env.WEBPACK_WATCH || false;
 }
 
-export function mode(env, argv) {
+function mode(env, argv) {
   return argv.mode || argv.nodeEnv || 'production';
 }
 
-export function development(env, argv) {
+function development(env, argv) {
   return mode(env, argv) === 'development';
 }
 
-export function production(env, argv) {
+function production(env, argv) {
   return mode(env, argv) === 'production';
 }
+
+export { build, development, mode, production, serve, watch };
