@@ -19,7 +19,7 @@
 
 import CopyPlugin from 'copy-webpack-plugin';
 
-export default function (env, argv, config, from = './public', to = '.') {
+export function copy(env, argv, config, from = './public', to = '.') {
   config.plugins.push(
     new CopyPlugin({
       patterns: [{ from: from, to: to }],

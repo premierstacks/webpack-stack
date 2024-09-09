@@ -23,7 +23,7 @@ import HtmlMinimizerPlugin from 'html-minimizer-webpack-plugin';
 import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 
-export default function (env, argv, entry = ['./src/index.js', './src/index.scss']) {
+export function browser(env, argv, entry = ['./src/index.js', './src/index.scss']) {
   const prod = argv.mode === 'production';
 
   const config = {

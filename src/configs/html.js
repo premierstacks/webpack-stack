@@ -19,7 +19,7 @@
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-export default function (env, argv, config, template = './src/index.html', filename = 'index.html', xhtml = true) {
+export function html(env, argv, config, template = './src/index.html', filename = 'index.html', xhtml = true) {
   config.plugins.push(
     new HtmlWebpackPlugin({
       template: template,

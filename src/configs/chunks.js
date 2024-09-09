@@ -17,7 +17,7 @@
  * - Web: https://premierstacks.com
  */
 
-export default function (env, argv, config) {
+export function chunks(env, argv, config) {
   config.optimization.runtimeChunk = 'single';
 
   config.optimization.splitChunks = {
