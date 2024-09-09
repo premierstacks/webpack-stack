@@ -53,6 +53,9 @@ export function browserTs(env, argv, entry = ['./src/index.ts', './src/index.scs
           use: [
             {
               loader: 'ts-loader',
+              options: {
+                transpileOnly: true,
+              },
             },
           ],
         },

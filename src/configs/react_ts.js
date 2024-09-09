@@ -53,6 +53,9 @@ export function reactTs(env, argv, entry = ['./src/index.tsx', './src/index.scss
           use: [
             {
               loader: 'ts-loader',
+              options: {
+                transpileOnly: true,
+              },
             },
           ],
         },
