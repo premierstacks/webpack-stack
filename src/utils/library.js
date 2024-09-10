@@ -17,10 +17,8 @@
  * - Web: https://premierstacks.com
  */
 
-function library(env, argv, config, library) {
+export function library(env, argv, config, library) {
   config.output.library = library;
 
   return config;
 }
-
-export { library };

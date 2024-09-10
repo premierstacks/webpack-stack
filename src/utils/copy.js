@@ -17,28 +17,14 @@
  * - Web: https://premierstacks.com
  */
 
-function serve(env) {
-  return env.WEBPACK_SERVE || false;
-}
+import CopyPlugin from 'copy-webpack-plugin';
 
-function build(env) {
-  return env.WEBPACK_BUILD || false;
-}
+export function copy(env, argv, config, from = './public', to = '.') {
+  config.plugins.push(
+    new CopyPlugin({
+      patterns: [{ from: from, to: to }],
+    }),
+  );
 
-function watch(env) {
-  return env.WEBPACK_WATCH || false;
+  return config;
 }
-
-function mode(env, argv) {
-  return argv.mode || argv.nodeEnv || 'production';
-}
-
-function development(env, argv) {
-  return mode(env, argv) === 'development';
-}
-
-function production(env, argv) {
-  return mode(env, argv) === 'production';
-}
-
-export { build, development, mode, production, serve, watch };

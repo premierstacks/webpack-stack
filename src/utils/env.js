@@ -17,21 +17,26 @@
  * - Web: https://premierstacks.com
  */
 
-function chunks(env, argv, config) {
-  config.optimization.runtimeChunk = 'single';
-
-  config.optimization.splitChunks = {
-    chunks: 'all',
-    cacheGroups: {
-      vendor: {
-        test: /[\\/]node_modules[\\/]/,
-        name: 'vendors',
-        chunks: 'all',
-      },
-    },
-  };
-
-  return config;
+export function isEnvServe(env) {
+  return env.WEBPACK_SERVE || false;
 }
 
-export { chunks };
+export function isEnvBuild(env) {
+  return env.WEBPACK_BUILD || false;
+}
+
+export function isEnvWatch(env) {
+  return env.WEBPACK_WATCH || false;
+}
+
+export function envMode(env, argv) {
+  return argv.mode || argv.nodeEnv || 'production';
+}
+
+export function isEnvdevelopment(env, argv) {
+  return mode(env, argv) === 'development';
+}
+
+export function isEnvproduction(env, argv) {
+  return mode(env, argv) === 'production';
+}

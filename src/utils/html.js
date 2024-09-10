@@ -17,14 +17,16 @@
  * - Web: https://premierstacks.com
  */
 
-import { browser } from './browser.js';
-import { browserTs } from './browser_ts.js';
-import { chunks } from './chunks.js';
-import { copy } from './copy.js';
-import { html } from './html.js';
-import { library } from './library.js';
-import { reactTs } from './react_ts.js';
-import * as dev from './dev.js';
-import * as env from './env.js';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-export { browser, browserTs, chunks, copy, html, library, reactTs, dev, env };
+export function html(env, argv, config, template = './node_modules/@premierstacks/webpack-stack/assets/index.html', filename = 'index.html', xhtml = true) {
+  config.plugins.push(
+    new HtmlWebpackPlugin({
+      template: template,
+      filename: filename,
+      xhtml: xhtml,
+    }),
+  );
+
+  return config;
+}

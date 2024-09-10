@@ -23,7 +23,7 @@ import HtmlMinimizerPlugin from 'html-minimizer-webpack-plugin';
 import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 
-function reactTs(env, argv, entry = ['./src/index.tsx', './src/index.scss']) {
+export function reactTs(env, argv, entry = ['./src/index.tsx', './src/index.scss']) {
   const prod = argv.mode === 'production';
 
   const config = {
@@ -122,5 +122,3 @@ function reactTs(env, argv, entry = ['./src/index.tsx', './src/index.scss']) {
 
   return config;
 }
-
-export { reactTs };

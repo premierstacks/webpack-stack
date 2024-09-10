@@ -17,16 +17,19 @@
  * - Web: https://premierstacks.com
  */
 
-import CopyPlugin from 'copy-webpack-plugin';
+export function chunks(env, argv, config) {
+  config.optimization.runtimeChunk = 'single';
 
-function copy(env, argv, config, from = './public', to = '.') {
-  config.plugins.push(
-    new CopyPlugin({
-      patterns: [{ from: from, to: to }],
-    }),
-  );
+  config.optimization.splitChunks = {
+    chunks: 'all',
+    cacheGroups: {
+      vendor: {
+        test: /[\\/]node_modules[\\/]/,
+        name: 'vendors',
+        chunks: 'all',
+      },
+    },
+  };
 
   return config;
 }
-
-export { copy };
