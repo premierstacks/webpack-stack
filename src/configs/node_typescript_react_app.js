@@ -5,39 +5,33 @@
  *
  * @license
  *
- * This software is the exclusive property of Tomáš Chochola, protected by copyright laws.
- * Although the source code may be accessible, it is not free for use without a valid license.
- * A valid license, obtainable through proper channels, is required for any software use.
- * For licensing or inquiries, please contact Tomáš Chochola or refer to the GitHub Sponsors page.
- *
+ * This software is proprietary property of Tomáš Chochola and protected by copyright laws.
+ * A valid license is required for any use or manipulation of the software or source code.
  * The full license terms are detailed in the LICENSE.md file within the source code repository.
- * The terms are subject to changes. Users are encouraged to review them periodically.
  *
  * @see {@link https://github.com/tomchochola} Personal GitHub
- * @see {@link https://github.com/premierstacks} Premierstacks GitHub
- * @see {@link https://github.com/sponsors/tomchochola} Sponsor & License
  * @see {@link https://premierstacks.com} Premierstacks website
+ * @see {@link https://github.com/premierstacks} Premierstacks GitHub
+ * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import HtmlMinimizerPlugin from 'html-minimizer-webpack-plugin';
-import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
+import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
+import { isWebpackProduction } from '../utils/env.js';
 
-export function browserTs(env, argv, entry = ['./src/index.ts', './src/index.scss']) {
-  const prod = argv.mode === 'production';
-
-  const config = {
-    target: ['web', 'es2015'],
-    entry: entry,
+export function nodeTypescriptReactApp(env, argv) {
+  return {
+    target: ['browserslist'],
+    entry: { index: ['./src/index.ts'] },
     output: {
-      filename: '[name].[contenthash].js',
+      filename: '[name].cjs',
       clean: true,
-      publicPath: '/',
-      assetModuleFilename: '[name].[hash][ext][query]',
+      publicPath: 'auto',
+      assetModuleFilename: 'assets/[name][hash][ext][query]',
     },
-    devtool: prod ? 'source-map' : 'eval-source-map',
+    devtool: isWebpackProduction(env, argv) ? 'hidden-nosources-source-map' : 'eval-source-map',
     devServer: {
       open: true,
       host: '0.0.0.0',
@@ -45,31 +39,31 @@ export function browserTs(env, argv, entry = ['./src/index.ts', './src/index.scs
       historyApiFallback: true,
     },
     resolve: {
-      extensions: ['.ts', '.mjs', '.js', '.cjs'],
+      extensions: ['.tsx', '.ts', '.jsx', '.mjs', '.js', '.cjs'],
     },
-    plugins: [],
     module: {
       rules: [
         {
-          test: /\.(ts|mjs|js|cjs)$/i,
+          resourceQuery: /asset/,
+          type: 'asset',
+        },
+        {
+          test: /\.(tsx|ts|jsx|mjs|js|cjs)$/i,
+          resourceQuery: { not: [/raw/] },
           use: [
             {
               loader: 'ts-loader',
-              options: {
-                transpileOnly: true,
-              },
             },
           ],
         },
         {
           test: /\.(scss|css)$/i,
+          resourceQuery: { not: [/raw/] },
+          type: 'css/auto',
+          generator: {
+            filename: 'assets/[name][hash].css[query]',
+          },
           use: [
-            {
-              loader: prod ? MiniCssExtractPlugin.loader : 'style-loader',
-            },
-            {
-              loader: 'css-loader',
-            },
             {
               loader: 'postcss-loader',
             },
@@ -79,16 +73,35 @@ export function browserTs(env, argv, entry = ['./src/index.ts', './src/index.scs
           ],
         },
         {
-          test: /\.(eot|svg|ttf|otf|woff|woff2|png|jpg|jpeg|gif|bmp|webp)$/i,
-          type: 'asset/resource',
-        },
-        {
           test: /\.(html|php)$/i,
+          resourceQuery: { not: [/raw/] },
           use: [
+            {
+              loader: 'file-loader',
+            },
+            {
+              loader: 'extract-loader',
+            },
             {
               loader: 'html-loader',
             },
           ],
+        },
+        {
+          resourceQuery: /source/,
+          type: 'asset/source',
+        },
+        {
+          resourceQuery: /resource/,
+          type: 'asset/resource',
+        },
+        {
+          resourceQuery: /inline/,
+          type: 'asset/inline',
+        },
+        {
+          resourceQuery: /asset/,
+          type: 'asset',
         },
       ],
     },
@@ -117,10 +130,4 @@ export function browserTs(env, argv, entry = ['./src/index.ts', './src/index.scs
       ],
     },
   };
-
-  if (prod) {
-    config.plugins.push(new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }));
-  }
-
-  return config;
 }
