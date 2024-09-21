@@ -58,55 +58,55 @@ Here are the available module exports and their use cases:
 import * as m from '@premierstacks/webpack-stack';
 
 // Webpack configuration for React TypeScript applications
-browserTypescriptReactApp(env, argv);
+browserTypescriptReactApp(env, argv): object;
 
 // Webpack configuration for React TypeScript libraries
-browserTypescriptReactLibrary(env, argv);
+browserTypescriptReactLibrary(env, argv): object;
 
 // Webpack configuration for browser-based TypeScript applications
-browserTypescriptApp(env, argv);
+browserTypescriptApp(env, argv): object;
 
 // Webpack configuration for browser-based TypeScript libraries
-browserTypescriptLibrary(env, argv);
+browserTypescriptLibrary(env, argv): object;
 
 // Webpack configuration for Node.js TypeScript applications
-nodeTypescriptApp(env, argv);
+nodeTypescriptApp(env, argv): object;
 
 // Webpack configuration for Node.js TypeScript libraries
-nodeTypescriptLibrary(env, argv);
+nodeTypescriptLibrary(env, argv): object;
 
 // Webpack configuration for Node.js TypeScript applications with React
-nodeTypescriptReactApp(env, argv);
+nodeTypescriptReactApp(env, argv): object;
 
 // Webpack configuration for Node.js TypeScript libraries with React
-nodeTypescriptReactLibrary(env, argv);
+nodeTypescriptReactLibrary(env, argv): object;
 
 // Utilities for chunk splitting
-chunks(env, argv, config);
+chunks(env, argv, config): object;
 
 // Utility for copying static assets
-copy(env, argv, config, options);
+copy(env, argv, config, options): object;
 
 // Environment utilities for Webpack
-getWebpackMode(env, argv);
+getWebpackMode(env, argv): string;
 
 // Utility for generating and managing HTML templates
-html(env, argv, config, options);
+html(env, argv, config, options): object;
 
 // Environment utilities for Webpack
-isWebpackBuild(env, argv);
+isWebpackBuild(env, argv): boolean;
 
 // Environment utilities for Webpack
-isWebpackDevelopment(env, argv);
+isWebpackDevelopment(env, argv): boolean;
 
 // Environment utilities for Webpack
-isWebpackProduction(env, argv);
+isWebpackProduction(env, argv): boolean;
 
 // Environment utilities for Webpack
-isWebpackServe(env, argv);
+isWebpackServe(env, argv): boolean;
 
 // Environment utilities for Webpack
-isWebpackWatch(env, argv);
+isWebpackWatch(env, argv): boolean;
 ```
 
 ## 🧩 Templates
