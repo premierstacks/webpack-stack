@@ -77,12 +77,6 @@ export function nodeTypescriptApp(env, argv) {
           resourceQuery: { not: [/raw/] },
           use: [
             {
-              loader: 'file-loader',
-            },
-            {
-              loader: 'extract-loader',
-            },
-            {
               loader: 'html-loader',
             },
           ],
