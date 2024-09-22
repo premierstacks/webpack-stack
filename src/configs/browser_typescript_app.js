@@ -29,7 +29,7 @@ export function browserTypescriptApp(env, argv) {
       filename: '[name][contenthash].js',
       clean: true,
       publicPath: 'auto',
-      assetModuleFilename: 'assets/[name][hash][ext][query]',
+      assetModuleFilename: 'assets/[name][contenthash][ext][query]',
     },
     devtool: isWebpackProduction(env, argv) ? 'hidden-nosources-source-map' : 'eval-source-map',
     devServer: {
@@ -42,7 +42,7 @@ export function browserTypescriptApp(env, argv) {
       extensions: ['.tsx', '.ts', '.jsx', '.mjs', '.js', '.cjs'],
     },
     experiments: {
-      css: true,
+      futureDefaults: true,
     },
     module: {
       rules: [
@@ -53,7 +53,6 @@ export function browserTypescriptApp(env, argv) {
         {
           test: /\.(tsx|ts|jsx|mjs|js|cjs)$/i,
           resourceQuery: { not: [/raw/] },
-          type: 'javascript/auto',
           use: [
             {
               loader: 'ts-loader',
@@ -86,7 +85,7 @@ export function browserTypescriptApp(env, argv) {
           test: /\.(scss)$/i,
           resourceQuery: { not: [/raw/], and: [/resource/] },
           generator: {
-            filename: 'assets/[name][hash].css[query]',
+            filename: 'assets/[name][contenthash].css[query]',
           },
         },
         {

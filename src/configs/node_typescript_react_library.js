@@ -44,6 +44,9 @@ export function nodeTypescriptReactLibrary(env, argv) {
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.mjs', '.js', '.cjs'],
     },
+    experiments: {
+      futureDefaults: true,
+    },
     externals: {
       react: 'React',
       'react-dom': 'ReactDOM',
@@ -57,7 +60,6 @@ export function nodeTypescriptReactLibrary(env, argv) {
         {
           test: /\.(tsx|ts|jsx|mjs|js|cjs)$/i,
           resourceQuery: { not: [/raw/] },
-          type: 'javascript/auto',
           use: [
             {
               loader: 'ts-loader',

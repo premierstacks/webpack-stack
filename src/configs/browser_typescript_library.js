@@ -44,6 +44,9 @@ export function browserTypescriptLibrary(env, argv) {
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.mjs', '.js', '.cjs'],
     },
+    experiments: {
+      futureDefaults: true,
+    },
     module: {
       rules: [
         {
@@ -53,7 +56,6 @@ export function browserTypescriptLibrary(env, argv) {
         {
           test: /\.(tsx|ts|jsx|mjs|js|cjs)$/i,
           resourceQuery: { not: [/raw/] },
-          type: 'javascript/auto',
           use: [
             {
               loader: 'ts-loader',
