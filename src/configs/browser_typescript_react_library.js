@@ -57,6 +57,7 @@ export function browserTypescriptReactLibrary(env, argv) {
         {
           test: /\.(tsx|ts|jsx|mjs|js|cjs)$/i,
           resourceQuery: { not: [/raw/] },
+          type: 'javascript/auto',
           use: [
             {
               loader: 'ts-loader',
@@ -67,9 +68,6 @@ export function browserTypescriptReactLibrary(env, argv) {
           test: /\.(scss|css)$/i,
           resourceQuery: { not: [/raw/] },
           type: 'css/auto',
-          generator: {
-            filename: 'assets/[name][hash].css[query]',
-          },
           use: [
             {
               loader: 'postcss-loader',
@@ -87,6 +85,13 @@ export function browserTypescriptReactLibrary(env, argv) {
               loader: 'html-loader',
             },
           ],
+        },
+        {
+          test: /\.(scss)$/i,
+          resourceQuery: { not: [/raw/], and: [/resource/] },
+          generator: {
+            filename: 'assets/[name].css[query]',
+          },
         },
         {
           resourceQuery: /source/,

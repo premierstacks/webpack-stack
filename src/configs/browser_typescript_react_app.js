@@ -24,7 +24,7 @@ import { isWebpackProduction } from '../utils/env.js';
 export function browserTypescriptReactApp(env, argv) {
   return {
     target: ['browserslist'],
-    entry: { index: ['./src/index.tsx'] },
+    entry: { index: ['./src/index.tsx', './src/index.scss'] },
     output: {
       filename: '[name][contenthash].js',
       clean: true,
@@ -50,6 +50,7 @@ export function browserTypescriptReactApp(env, argv) {
         {
           test: /\.(tsx|ts|jsx|mjs|js|cjs)$/i,
           resourceQuery: { not: [/raw/] },
+          type: 'javascript/auto',
           use: [
             {
               loader: 'ts-loader',
@@ -60,9 +61,6 @@ export function browserTypescriptReactApp(env, argv) {
           test: /\.(scss|css)$/i,
           resourceQuery: { not: [/raw/] },
           type: 'css/auto',
-          generator: {
-            filename: 'assets/[name][hash].css[query]',
-          },
           use: [
             {
               loader: 'postcss-loader',
@@ -80,6 +78,13 @@ export function browserTypescriptReactApp(env, argv) {
               loader: 'html-loader',
             },
           ],
+        },
+        {
+          test: /\.(scss)$/i,
+          resourceQuery: { not: [/raw/], and: [/resource/] },
+          generator: {
+            filename: 'assets/[name][hash].css[query]',
+          },
         },
         {
           resourceQuery: /source/,
