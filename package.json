@@ -2,9 +2,9 @@
   "name": "@premierstacks/webpack-stack",
   "description": "premierstacks webpack stack",
   "keywords": [
+    "tomchochola",
     "premierstacks",
-    "webpack-stack",
-    "tomchochola"
+    "webpack-stack"
   ],
   "homepage": "https://github.com/premierstacks/webpack-stack",
   "bugs": {
