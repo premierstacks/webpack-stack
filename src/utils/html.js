@@ -17,7 +17,7 @@
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-const def = { template: './node_modules/@premierstacks/webpack-stack/assets/index.html', filename: 'index.html', xhtml: true, emit: true, chunks: 'all' };
+const def = { template: './node_modules/@premierstacks/webpack-stack/assets/index.html', filename: 'index.html', xhtml: true, inject: true, chunks: 'all' };
 
 export function html(env, argv, config, options = def) {
   config.plugins = config.plugins || [];

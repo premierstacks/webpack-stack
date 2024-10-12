@@ -213,7 +213,8 @@ The following is a breakdown of the folder and file structure within this reposi
 ├── Makefile
 ├── README.md
 ├── assets
-│   └── favicon.ico
+│   ├── favicon.ico
+│   └── index.html
 ├── eslint.config.js
 ├── package.json
 ├── prettier.config.js
@@ -244,5 +245,5 @@ The following is a breakdown of the folder and file structure within this reposi
     ├── node_typescript_react_app.template
     └── node_typescript_react_library.template
 
-5 directories, 34 files
+5 directories, 35 files
 ```
