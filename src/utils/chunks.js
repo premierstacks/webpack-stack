@@ -15,18 +15,29 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-export function chunks(env, argv, config) {
+export function reactChunks(env, argv, config) {
   config.optimization = config.optimization || {};
-  config.optimization.runtimeChunk = 'single';
-  config.optimization.splitChunks = {
+  config.optimization.splitChunks = config.optimization.splitChunks || {};
+  config.optimization.splitChunks.cacheGroups = config.optimization.splitChunks.cacheGroups || {};
+
+  config.optimization.splitChunks.cacheGroups.react = {
+    test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom)[\\/]/,
+    name: 'vendor',
     chunks: 'all',
-    cacheGroups: {
-      vendor: {
-        test: /[\\/]node_modules[\\/]/,
-        name: 'vendors',
-        chunks: 'all',
-      },
-    },
+  };
+
+  return config;
+}
+
+export function vendorChunks(env, argv, config) {
+  config.optimization = config.optimization || {};
+  config.optimization.splitChunks = config.optimization.splitChunks || {};
+  config.optimization.splitChunks.cacheGroups = config.optimization.splitChunks.cacheGroups || {};
+
+  config.optimization.splitChunks.cacheGroups.react = {
+    test: /[\\/]node_modules[\\/]/,
+    name: 'vendor',
+    chunks: 'all',
   };
 
   return config;
