@@ -1,9 +1,11 @@
-import { browserTypescriptReactLibrary } from '@premierstacks/webpack-stack';
+import { browserTypescriptReactLibrary, reactExternals } from '@premierstacks/webpack-stack';
 
 export default function (env, argv) {
   const config = browserTypescriptReactLibrary(env, argv);
 
   config.entry = { index: ['./src/index.ts'] };
+
+  reactExternals(env, argv, config);
 
   return config;
 }

@@ -18,8 +18,8 @@
 export function reactExternals(env, argv, config) {
   config.externals = config.externals || {};
 
-  config.externals.react = 'React';
-  config.externals['react-dom'] = 'ReactDOM';
-  config.externals['react-router'] = 'ReactRouter';
-  config.externals['react-router-dom'] = 'ReactRouterDOM';
+  config.externals.react = 'react';
+  config.externals['react-dom'] = 'react-dom';
+  config.externals['react-router'] = 'react-router';
+  config.externals['react-router-dom'] = 'react-router-dom';
 }
