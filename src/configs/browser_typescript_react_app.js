@@ -26,10 +26,10 @@ export function browserTypescriptReactApp(env, argv) {
     target: ['browserslist'],
     entry: { index: ['./src/index.tsx', './src/index.scss'] },
     output: {
-      filename: '[name][contenthash].js',
+      filename: '[name].[contenthash].js',
       clean: true,
       publicPath: 'auto',
-      assetModuleFilename: 'assets/[name][contenthash][ext][query]',
+      assetModuleFilename: 'assets/[name].[contenthash][ext][query]',
     },
     devtool: isWebpackProduction(env, argv) ? 'hidden-nosources-source-map' : 'eval-source-map',
     devServer: {
@@ -85,7 +85,7 @@ export function browserTypescriptReactApp(env, argv) {
           test: /\.(scss)$/i,
           resourceQuery: { not: [/raw/], and: [/resource/] },
           generator: {
-            filename: 'assets/[name][contenthash].css[query]',
+            filename: 'assets/[name].[contenthash].css[query]',
           },
         },
         {

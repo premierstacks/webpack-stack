@@ -29,7 +29,7 @@ export function nodeTypescriptApp(env, argv) {
       filename: '[name].cjs',
       clean: true,
       publicPath: 'auto',
-      assetModuleFilename: 'assets/[name][contenthash][ext][query]',
+      assetModuleFilename: 'assets/[name].[contenthash][ext][query]',
     },
     devtool: isWebpackProduction(env, argv) ? 'hidden-nosources-source-map' : 'eval-source-map',
     devServer: {
@@ -85,7 +85,7 @@ export function nodeTypescriptApp(env, argv) {
           test: /\.(scss)$/i,
           resourceQuery: { not: [/raw/], and: [/resource/] },
           generator: {
-            filename: 'assets/[name][contenthash].css[query]',
+            filename: 'assets/[name].[contenthash].css[query]',
           },
         },
         {

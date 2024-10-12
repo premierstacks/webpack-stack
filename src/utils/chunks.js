@@ -22,7 +22,7 @@ export function reactChunks(env, argv, config) {
 
   config.optimization.splitChunks.cacheGroups.react = {
     test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom)[\\/]/,
-    name: 'vendor',
+    name: 'react',
     chunks: 'all',
   };
 
