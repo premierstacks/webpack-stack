@@ -47,10 +47,6 @@ export function nodeTypescriptReactApp(env, argv) {
     module: {
       rules: [
         {
-          resourceQuery: /asset/,
-          type: 'asset',
-        },
-        {
           test: /\.(tsx|ts|jsx|mjs|js|cjs)$/i,
           resourceQuery: { not: [/raw/] },
           use: [
@@ -80,13 +76,6 @@ export function nodeTypescriptReactApp(env, argv) {
               loader: 'html-loader',
             },
           ],
-        },
-        {
-          test: /\.(scss)$/i,
-          resourceQuery: { not: [/raw/], and: [/resource/] },
-          generator: {
-            filename: 'assets/[name].[contenthash].css[query]',
-          },
         },
         {
           resourceQuery: /source/,

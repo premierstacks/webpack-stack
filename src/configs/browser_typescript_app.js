@@ -47,10 +47,6 @@ export function browserTypescriptApp(env, argv) {
     module: {
       rules: [
         {
-          resourceQuery: /asset/,
-          type: 'asset',
-        },
-        {
           test: /\.(tsx|ts|jsx|mjs|js|cjs)$/i,
           resourceQuery: { not: [/raw/] },
           use: [
@@ -82,13 +78,6 @@ export function browserTypescriptApp(env, argv) {
           ],
         },
         {
-          test: /\.(scss)$/i,
-          resourceQuery: { not: [/raw/], and: [/resource/] },
-          generator: {
-            filename: 'assets/[name].[contenthash].css[query]',
-          },
-        },
-        {
           resourceQuery: /source/,
           type: 'asset/source',
         },
@@ -99,6 +88,10 @@ export function browserTypescriptApp(env, argv) {
         {
           resourceQuery: /inline/,
           type: 'asset/inline',
+        },
+        {
+          resourceQuery: /asset/,
+          type: 'asset',
         },
       ],
     },
