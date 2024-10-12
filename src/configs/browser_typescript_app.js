@@ -115,9 +115,6 @@ export function browserTypescriptApp(env, argv) {
     },
     optimization: {
       runtimeChunk: 'single',
-      splitChunks: {
-        chunks: 'all',
-      },
       minimizer: [
         '...',
         new CssMinimizerPlugin(),
