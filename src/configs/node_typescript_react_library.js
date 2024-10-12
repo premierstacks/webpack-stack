@@ -56,9 +56,27 @@ export function nodeTypescriptReactLibrary(env, argv) {
         {
           test: /\.(tsx|ts|jsx|mjs|js|cjs)$/i,
           resourceQuery: { not: [/raw/] },
+          exclude: /[\\/]node_modules[\\/]/,
           use: [
             {
               loader: 'ts-loader',
+            },
+          ],
+        },
+        {
+          test: /\.(tsx|ts|jsx|mjs|js|cjs)$/i,
+          resourceQuery: { not: [/raw/] },
+          include: /[\\/]node_modules[\\/]/,
+          use: [
+            {
+              loader: 'ts-loader',
+              options: {
+                compilerOptions: {
+                  declaration: false,
+                  declarationMap: false,
+                  sourceMap: false,
+                },
+              },
             },
           ],
         },

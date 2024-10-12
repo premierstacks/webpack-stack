@@ -3,5 +3,7 @@ import { nodeTypescriptReactApp } from '@premierstacks/webpack-stack';
 export default function (env, argv) {
   const config = nodeTypescriptReactApp(env, argv);
 
+  config.entry = { index: ['./src/index.ts'] };
+
   return config;
 }

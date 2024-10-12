@@ -74,16 +74,10 @@ Here are the available module exports:
 
 ```js
 import {
-  browserTypescriptReactApp,
-  browserTypescriptReactLibrary,
   browserTypescriptApp,
   browserTypescriptLibrary,
-  nodeTypescriptApp,
-  nodeTypescriptLibrary,
-  nodeTypescriptReactApp,
-  nodeTypescriptReactLibrary,
-  reactChunks,
-  vendorChunks,
+  browserTypescriptReactApp,
+  browserTypescriptReactLibrary,
   copy,
   getWebpackMode,
   html,
@@ -92,6 +86,13 @@ import {
   isWebpackProduction,
   isWebpackServe,
   isWebpackWatch,
+  nodeTypescriptApp,
+  nodeTypescriptLibrary,
+  nodeTypescriptReactApp,
+  nodeTypescriptReactLibrary,
+  reactChunks,
+  reactExternals,
+  vendorChunks,
 } from '@premierstacks/eslint-stack';
 ```
 
@@ -231,6 +232,7 @@ The following is a breakdown of the folder and file structure within this reposi
 │       ├── chunks.js
 │       ├── copy.js
 │       ├── env.js
+│       ├── externals.js
 │       └── html.js
 └── templates
     ├── browser_typescript_app.template
@@ -242,5 +244,5 @@ The following is a breakdown of the folder and file structure within this reposi
     ├── node_typescript_react_app.template
     └── node_typescript_react_library.template
 
-5 directories, 33 files
+5 directories, 34 files
 ```

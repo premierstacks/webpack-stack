@@ -15,16 +15,11 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-export * from './configs/browser_typescript_app.js';
-export * from './configs/browser_typescript_library.js';
-export * from './configs/browser_typescript_react_app.js';
-export * from './configs/browser_typescript_react_library.js';
-export * from './configs/node_typescript_app.js';
-export * from './configs/node_typescript_library.js';
-export * from './configs/node_typescript_react_app.js';
-export * from './configs/node_typescript_react_library.js';
-export * from './utils/chunks.js';
-export * from './utils/copy.js';
-export * from './utils/env.js';
-export * from './utils/externals.js';
-export * from './utils/html.js';
+export function reactExternals(env, argv, config) {
+  config.externals = config.externals || {};
+
+  config.externals.react = 'React';
+  config.externals['react-dom'] = 'ReactDOM';
+  config.externals['react-router'] = 'ReactRouter';
+  config.externals['react-router-dom'] = 'ReactRouterDOM';
+}

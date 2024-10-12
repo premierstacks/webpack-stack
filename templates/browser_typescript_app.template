@@ -1,11 +1,12 @@
-import { browserTypescriptApp, chunks, html, copy } from '@premierstacks/webpack-stack';
+import { browserTypescriptApp, copy, html } from '@premierstacks/webpack-stack';
 
 export default function (env, argv) {
   const config = browserTypescriptApp(env, argv);
 
-  chunks(env, argv, config);
-  html(env, argv, config);
-  copy(env, argv, config);
+  config.entry = { index: ['./src/index.ts', './src/index.scss'] };
+
+  html(env, argv, config, { inject: true, template: './src/index.html', filename: 'index.html', chunks: ['index'] });
+  copy(env, argv, config, { patterns: [{ from: './public', to: '.' }] });
 
   return config;
 }
