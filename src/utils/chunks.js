@@ -34,7 +34,7 @@ export function vendorChunks(env, argv, config) {
   config.optimization.splitChunks = config.optimization.splitChunks || {};
   config.optimization.splitChunks.cacheGroups = config.optimization.splitChunks.cacheGroups || {};
 
-  config.optimization.splitChunks.cacheGroups.react = {
+  config.optimization.splitChunks.cacheGroups.vendor = {
     test: /[\\/]node_modules[\\/]/,
     name: 'vendor',
     chunks: 'all',
