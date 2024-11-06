@@ -56,6 +56,16 @@ export function nodeTypescriptLibrary(env, argv) {
           use: [
             {
               loader: 'ts-loader',
+              options: {
+                onlyCompileBundledFiles: true,
+                compilerOptions: {
+                  declaration: true,
+                  declarationMap: true,
+                  sourceMap: true,
+                  module: 'ESNext',
+                  moduleResolution: 'Bundler',
+                },
+              },
             },
           ],
         },
@@ -67,10 +77,13 @@ export function nodeTypescriptLibrary(env, argv) {
             {
               loader: 'ts-loader',
               options: {
+                onlyCompileBundledFiles: true,
                 compilerOptions: {
                   declaration: false,
                   declarationMap: false,
                   sourceMap: false,
+                  module: 'ESNext',
+                  moduleResolution: 'Bundler',
                 },
               },
             },

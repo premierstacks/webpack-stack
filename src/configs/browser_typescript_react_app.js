@@ -53,6 +53,16 @@ export function browserTypescriptReactApp(env, argv) {
           use: [
             {
               loader: 'ts-loader',
+              options: {
+                onlyCompileBundledFiles: true,
+                compilerOptions: {
+                  declaration: false,
+                  declarationMap: false,
+                  sourceMap: true,
+                  module: 'ESNext',
+                  moduleResolution: 'Bundler',
+                },
+              },
             },
           ],
         },
@@ -64,10 +74,13 @@ export function browserTypescriptReactApp(env, argv) {
             {
               loader: 'ts-loader',
               options: {
+                onlyCompileBundledFiles: true,
                 compilerOptions: {
                   declaration: false,
                   declarationMap: false,
                   sourceMap: false,
+                  module: 'ESNext',
+                  moduleResolution: 'Bundler',
                 },
               },
             },

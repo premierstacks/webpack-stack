@@ -47,10 +47,6 @@ export function nodeTypescriptReactLibrary(env, argv) {
     experiments: {
       futureDefaults: true,
     },
-    externals: {
-      react: 'React',
-      'react-dom': 'ReactDOM',
-    },
     module: {
       rules: [
         {
@@ -60,6 +56,16 @@ export function nodeTypescriptReactLibrary(env, argv) {
           use: [
             {
               loader: 'ts-loader',
+              options: {
+                onlyCompileBundledFiles: true,
+                compilerOptions: {
+                  declaration: true,
+                  declarationMap: true,
+                  sourceMap: true,
+                  module: 'ESNext',
+                  moduleResolution: 'Bundler',
+                },
+              },
             },
           ],
         },
@@ -71,10 +77,13 @@ export function nodeTypescriptReactLibrary(env, argv) {
             {
               loader: 'ts-loader',
               options: {
+                onlyCompileBundledFiles: true,
                 compilerOptions: {
                   declaration: false,
                   declarationMap: false,
                   sourceMap: false,
+                  module: 'ESNext',
+                  moduleResolution: 'Bundler',
                 },
               },
             },
