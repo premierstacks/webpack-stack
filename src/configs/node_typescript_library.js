@@ -38,7 +38,7 @@ export function nodeTypescriptLibrary(env, argv) {
     devServer: {
       open: true,
       host: '0.0.0.0',
-      port: 8000,
+      port: 3000,
       historyApiFallback: true,
     },
     resolve: {
@@ -47,6 +47,7 @@ export function nodeTypescriptLibrary(env, argv) {
     experiments: {
       futureDefaults: true,
     },
+    plugins: [],
     module: {
       rules: [
         {
@@ -138,18 +139,70 @@ export function nodeTypescriptLibrary(env, argv) {
         new ImageMinimizerPlugin({
           minimizer: {
             implementation: ImageMinimizerPlugin.sharpMinify,
-          },
-        }),
-        new ImageMinimizerPlugin({
-          minimizer: {
-            implementation: ImageMinimizerPlugin.svgoMinify,
             options: {
               encodeOptions: {
-                multipass: true,
-                plugins: ['preset-default'],
+                jpeg: {
+                  quality: 100,
+                },
+                webp: {
+                  lossless: true,
+                  effort: 6,
+                },
+                avif: {
+                  lossless: true,
+                  effort: 9,
+                },
+                heif: {
+                  lossless: true,
+                  effort: 9,
+                },
+                jxl: {
+                  lossless: true,
+                  effort: 9,
+                },
+                jp2: {
+                  lossless: true,
+                },
+                tiff: {
+                  quality: 100,
+                },
+                png: {
+                  effort: 10,
+                },
+                gif: {
+                  effort: 10,
+                },
               },
             },
           },
+          generator: [
+            {
+              preset: 'avif',
+              type: 'import',
+              implementation: ImageMinimizerPlugin.sharpGenerate,
+              options: {
+                encodeOptions: {
+                  avif: {
+                    lossless: false,
+                    effort: 9,
+                  },
+                },
+              },
+            },
+            {
+              preset: 'webp',
+              type: 'import',
+              implementation: ImageMinimizerPlugin.sharpGenerate,
+              options: {
+                encodeOptions: {
+                  webp: {
+                    lossless: false,
+                    effort: 6,
+                  },
+                },
+              },
+            },
+          ],
         }),
       ],
     },
