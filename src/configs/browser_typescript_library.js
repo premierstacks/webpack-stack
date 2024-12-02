@@ -183,8 +183,11 @@ export function browserTypescriptLibrary(env, argv) {
               options: {
                 encodeOptions: {
                   avif: {
+                    quality: 50,
                     lossless: false,
                     effort: 9,
+                    chromaSubsampling: '4:2:0',
+                    bitdepth: 8,
                   },
                 },
               },
@@ -196,8 +199,15 @@ export function browserTypescriptLibrary(env, argv) {
               options: {
                 encodeOptions: {
                   webp: {
+                    quality: 90,
+                    alphaQuality: 100,
                     lossless: false,
+                    nearLossless: false,
+                    smartSubsample: true,
                     effort: 6,
+                    minSize: false,
+                    mixed: false,
+                    preset: 'default',
                   },
                 },
               },

@@ -28,7 +28,7 @@ export function browserTypescriptReactApp(env, argv) {
     output: {
       filename: '[name].[contenthash].js',
       clean: true,
-      publicPath: 'auto',
+      publicPath: '/',
       assetModuleFilename: 'assets/[name].[contenthash][ext][query]',
     },
     devtool: isWebpackProduction(env, argv) ? 'hidden-nosources-source-map' : 'eval-source-map',
@@ -181,8 +181,11 @@ export function browserTypescriptReactApp(env, argv) {
               options: {
                 encodeOptions: {
                   avif: {
+                    quality: 50,
                     lossless: false,
                     effort: 9,
+                    chromaSubsampling: '4:2:0',
+                    bitdepth: 8,
                   },
                 },
               },
@@ -194,8 +197,15 @@ export function browserTypescriptReactApp(env, argv) {
               options: {
                 encodeOptions: {
                   webp: {
+                    quality: 90,
+                    alphaQuality: 100,
                     lossless: false,
+                    nearLossless: false,
+                    smartSubsample: true,
                     effort: 6,
+                    minSize: false,
+                    mixed: false,
+                    preset: 'default',
                   },
                 },
               },
