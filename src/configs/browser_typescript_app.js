@@ -110,6 +110,15 @@ export function browserTypescriptApp(env, argv) {
           ],
         },
         {
+          test: /\.(svg)$/i,
+          resourceQuery: /svgr/,
+          use: [
+            {
+              loader: '@svgr/webpack',
+            },
+          ],
+        },
+        {
           resourceQuery: /source/,
           type: 'asset/source',
         },
@@ -181,7 +190,7 @@ export function browserTypescriptApp(env, argv) {
               options: {
                 encodeOptions: {
                   avif: {
-                    quality: 50,
+                    quality: 60,
                     lossless: false,
                     effort: 9,
                     chromaSubsampling: '4:2:0',
@@ -206,6 +215,49 @@ export function browserTypescriptApp(env, argv) {
                     minSize: false,
                     mixed: false,
                     preset: 'default',
+                  },
+                },
+              },
+            },
+            {
+              preset: 'png',
+              type: 'import',
+              implementation: ImageMinimizerPlugin.sharpGenerate,
+              options: {
+                encodeOptions: {
+                  png: {
+                    progressive: true,
+                    compressionLevel: 9,
+                    adaptiveFiltering: true,
+                    quality: 100,
+                    effort: 10,
+                    palette: true,
+                    colours: 256,
+                    colors: 256,
+                    dither: 0.8,
+                  },
+                },
+              },
+            },
+            {
+              preset: 'jpg',
+              type: 'import',
+              implementation: ImageMinimizerPlugin.sharpGenerate,
+              options: {
+                encodeOptions: {
+                  jpg: {
+                    quality: 80,
+                    progressive: true,
+                    chromaSubsampling: '4:4:4',
+                    trellisQuantisation: true,
+                    overshootDeringing: true,
+                    optimiseScans: true,
+                    optimizeScans: true,
+                    optimiseCoding: true,
+                    optimizeCoding: true,
+                    quantisationTable: 2,
+                    quantizationTable: 2,
+                    mozjpeg: true,
                   },
                 },
               },
