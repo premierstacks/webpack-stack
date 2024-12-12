@@ -72,7 +72,7 @@ export function browserTypescriptReactLibrary(env, argv) {
           ],
         },
         {
-          test: /\.(tsx|ts|jsx|mjs|js|cjs)$/i,
+          test: /\.(tsx|ts|jsx)$/i,
           resourceQuery: { not: [/raw/] },
           include: /[\\/]node_modules[\\/]/,
           use: [
