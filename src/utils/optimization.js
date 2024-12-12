@@ -15,7 +15,7 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-import { splitChunks } from './chunks';
+import { splitChunks } from './chunks.js';
 
 export function optimize(env, argv, config) {
   splitChunks(env, argv, config);
