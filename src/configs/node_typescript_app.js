@@ -19,6 +19,7 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import HtmlMinimizerPlugin from 'html-minimizer-webpack-plugin';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 import { isWebpackProduction } from '../utils/env.js';
 
 export function nodeTypescriptApp(env, argv) {
@@ -138,7 +139,29 @@ export function nodeTypescriptApp(env, argv) {
     },
     optimization: {
       minimizer: [
-        '...',
+        new TerserPlugin({
+          terserOptions: {
+            ecma: 2020,
+            toplevel: true,
+            module: true,
+            compress: {
+              drop_console: true,
+              drop_debugger: true,
+              passes: 5,
+              toplevel: true,
+              ecma: 2020,
+              module: true,
+            },
+            format: {
+              ecma: 2020,
+              comments: false,
+            },
+            mangle: {
+              toplevel: true,
+              module: true,
+            },
+          },
+        }),
         new CssMinimizerPlugin(),
         new HtmlMinimizerPlugin(),
         new JsonMinimizerPlugin(),

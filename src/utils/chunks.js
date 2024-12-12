@@ -42,3 +42,11 @@ export function vendorChunks(env, argv, config) {
 
   return config;
 }
+
+export function splitChunks(env, argv, config) {
+  config.optimization = config.optimization || {};
+  config.optimization.splitChunks = config.optimization.splitChunks || {};
+  config.optimization.splitChunks.chunks = 'all';
+
+  return config;
+}
