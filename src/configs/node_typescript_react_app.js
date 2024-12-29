@@ -24,7 +24,7 @@ import { isWebpackProduction } from '../utils/env.js';
 
 export function nodeTypescriptReactApp(env, argv) {
   return {
-    target: ['browserslist'],
+    target: ['node18', 'es2022'],
     entry: { index: ['./src/index.ts'] },
     output: {
       filename: '[name].cjs',
