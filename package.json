@@ -45,16 +45,16 @@
     "image-minimizer-webpack-plugin": "^4.1",
     "json-minimizer-webpack-plugin": "^5.0",
     "postcss-loader": "^8.1",
-    "sass-embedded": "^1.78",
+    "sass-embedded": "^1.83",
     "sass-loader": "^16.0",
     "sharp": "^0.33",
     "svgo": "^3.3",
     "terser-webpack-plugin": "^5.3",
     "ts-loader": "^9.5",
-    "webpack": "^5.94",
+    "webpack": "^5.97",
     "webpack-bundle-analyzer": "^4.10",
-    "webpack-cli": "^5.1",
-    "webpack-dev-server": "^5.1"
+    "webpack-cli": "^6.0",
+    "webpack-dev-server": "^5.2"
   },
   "devDependencies": {
     "@premierstacks/eslint-stack": "github:premierstacks/eslint-stack",
