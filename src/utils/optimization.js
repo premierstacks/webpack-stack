@@ -15,6 +15,8 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
+import CompressionPlugin from 'compression-webpack-plugin';
+import { constants } from 'zlib';
 import { splitChunks } from './chunks.js';
 
 export function optimize(env, argv, config) {
@@ -27,6 +29,30 @@ export function optimize(env, argv, config) {
 export function removeAvailableModules(env, argv, config) {
   config.optimization = config.optimization || {};
   config.optimization.removeAvailableModules = true;
+
+  return config;
+}
+
+export function compress(env, argv, config) {
+  config.plugins = config.plugins || [];
+
+  config.plugins.push(
+    new CompressionPlugin({
+      algorithm: 'gzip',
+      compressionOptions: { level: 9 },
+      minRatio: Infinity,
+      filename: '[path][base].gz[query][fragment]',
+    }),
+  );
+
+  config.plugins.push(
+    new CompressionPlugin({
+      algorithm: 'brotliCompress',
+      compressionOptions: { [constants.BROTLI_PARAM_QUALITY]: constants.BROTLI_MAX_QUALITY },
+      minRatio: Infinity,
+      filename: '[path][base].br[query][fragment]',
+    }),
+  );
 
   return config;
 }
