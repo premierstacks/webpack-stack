@@ -57,6 +57,7 @@ export function nodeTypescriptApp(env, argv) {
               loader: 'ts-loader',
               options: {
                 onlyCompileBundledFiles: true,
+                allowTsInNodeModules: true,
                 compilerOptions: {
                   declaration: false,
                   declarationMap: false,
@@ -88,6 +89,7 @@ export function nodeTypescriptApp(env, argv) {
               loader: 'ts-loader',
               options: {
                 onlyCompileBundledFiles: true,
+                allowTsInNodeModules: true,
                 compilerOptions: {
                   declaration: false,
                   declarationMap: false,

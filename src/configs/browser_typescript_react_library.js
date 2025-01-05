@@ -60,6 +60,7 @@ export function browserTypescriptReactLibrary(env, argv) {
               loader: 'ts-loader',
               options: {
                 onlyCompileBundledFiles: true,
+                allowTsInNodeModules: true,
                 compilerOptions: {
                   declaration: true,
                   declarationMap: true,
@@ -91,6 +92,7 @@ export function browserTypescriptReactLibrary(env, argv) {
               loader: 'ts-loader',
               options: {
                 onlyCompileBundledFiles: true,
+                allowTsInNodeModules: true,
                 compilerOptions: {
                   declaration: false,
                   declarationMap: false,
