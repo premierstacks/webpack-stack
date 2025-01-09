@@ -3,6 +3,7 @@
   "description": "premierstacks webpack stack",
   "keywords": [
     "tomchochola",
+    "tomaschochola",
     "premierstacks",
     "webpack-stack"
   ],
@@ -11,7 +12,7 @@
     "email": "chocholatom1997@gmail.com",
     "url": "https://github.com/premierstacks/webpack-stack/issues"
   },
-  "license": "SEE LICENSE IN ./LICENSE.md",
+  "license": "CC-BY-ND-4.0",
   "author": {
     "email": "chocholatom1997@gmail.com",
     "name": "Tomáš Chochola",
@@ -28,12 +29,7 @@
     "type": "github",
     "url": "https://github.com/sponsors/tomchochola"
   },
-  "main": "./src/index.js",
-  "sideEffects": false,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/premierstacks/webpack-stack.git"
-  },
+  "repository": "github:premierstacks/webpack-stack",
   "dependencies": {
     "@svgr/webpack": "^8.1",
     "compression-webpack-plugin": "^11.1",
@@ -61,5 +57,7 @@
     "@premierstacks/prettier-stack": "github:premierstacks/prettier-stack"
   },
   "private": true,
-  "type": "module"
+  "type": "module",
+  "sideEffects": false,
+  "main": "src/index.js"
 }
