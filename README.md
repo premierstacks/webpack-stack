@@ -171,20 +171,20 @@ The following is a breakdown of the folder and file structure within this reposi
 
 ```bash
 .
-├── .editorconfig
-├── .gitattributes
-├── .gitignore
-├── .prettierignore
-├── AUTHORS.md
-├── LICENSE.md
-├── Makefile
-├── README.md
 ├── assets
 │   ├── favicon.ico
 │   └── index.html
+├── AUTHORS.md
+├── .editorconfig
 ├── eslint.config.js
+├── .gitattributes
+├── .gitignore
+├── LICENSE
+├── Makefile
 ├── package.json
 ├── prettier.config.js
+├── .prettierignore
+├── README.md
 ├── src
 │   ├── configs
 │   │   ├── browser_typescript_app.js
@@ -197,11 +197,12 @@ The following is a breakdown of the folder and file structure within this reposi
 │   │   └── node_typescript_react_library.js
 │   ├── index.js
 │   └── utils
-│       ├── chunks.js
 │       ├── copy.js
 │       ├── env.js
 │       ├── externals.js
-│       └── html.js
+│       ├── html.js
+│       ├── chunks.js
+│       └── optimization.js
 └── templates
     ├── browser_typescript_app.template
     ├── browser_typescript_library.template
@@ -212,5 +213,5 @@ The following is a breakdown of the folder and file structure within this reposi
     ├── node_typescript_react_app.template
     └── node_typescript_react_library.template
 
-5 directories, 35 files
+6 directories, 36 files
 ```
