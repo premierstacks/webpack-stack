@@ -12,7 +12,7 @@
     "email": "chocholatom1997@gmail.com",
     "url": "https://github.com/premierstacks/webpack-stack/issues"
   },
-  "license": "CC-BY-ND-4.0",
+  "license": "Apache-2.0",
   "author": {
     "email": "chocholatom1997@gmail.com",
     "name": "Tomáš Chochola",
@@ -31,9 +31,8 @@
   },
   "repository": "github:premierstacks/webpack-stack",
   "dependencies": {
-    "@svgr/webpack": "^8.1",
     "compression-webpack-plugin": "^11.1",
-    "copy-webpack-plugin": "^12.0",
+    "copy-webpack-plugin": "^13.0",
     "css-minimizer-webpack-plugin": "^7.0",
     "html-loader": "^5.1",
     "html-minimizer-webpack-plugin": "^5.0",
@@ -41,23 +40,38 @@
     "image-minimizer-webpack-plugin": "^4.1",
     "json-minimizer-webpack-plugin": "^5.0",
     "postcss-loader": "^8.1",
-    "sass-embedded": "^1.83",
+    "sass-embedded": "^1.85",
     "sass-loader": "^16.0",
     "sharp": "^0.33",
     "svgo": "^3.3",
     "terser-webpack-plugin": "^5.3",
     "ts-loader": "^9.5",
-    "webpack": "^5.97",
+    "webpack": "^5.98",
     "webpack-bundle-analyzer": "^4.10",
     "webpack-cli": "^6.0",
     "webpack-dev-server": "^5.2"
   },
   "devDependencies": {
     "@premierstacks/eslint-stack": "github:premierstacks/eslint-stack",
-    "@premierstacks/prettier-stack": "github:premierstacks/prettier-stack"
+    "@premierstacks/prettier-stack": "github:premierstacks/prettier-stack",
+    "npm-run-all": "^4.1"
   },
-  "private": true,
   "type": "module",
   "sideEffects": false,
-  "main": "src/index.js"
+  "main": "src/index.js",
+  "scripts": {
+    "npm:install": "npm install --install-links --include prod --include dev --include peer --include optional",
+    "npm:update": "npm update --install-links --include prod --include dev --include peer --include optional",
+    "security": "run-s npm:audit",
+    "npm:audit": "npm audit --audit-level info --include prod --include dev --include peer --include optional",
+    "clean": "git clean -xfd ./node_modules ./package-lock.json",
+    "fix": "run-s fix:eslint fix:prettier",
+    "fix:eslint": "eslint --fix .",
+    "fix:prettier": "prettier -w .",
+    "lint": "run-s lint:eslint lint:prettier",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier -c .",
+    "local": "npm run npm:install",
+    "check": "run-s lint security"
+  }
 }
