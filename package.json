@@ -58,7 +58,7 @@
   },
   "type": "module",
   "sideEffects": false,
-  "main": "src/index.js",
+  "main": "./src/index.js",
   "scripts": {
     "npm:install": "npm install --install-links --include prod --include dev --include peer --include optional",
     "npm:update": "npm update --install-links --include prod --include dev --include peer --include optional",
