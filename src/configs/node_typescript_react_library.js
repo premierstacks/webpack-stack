@@ -21,12 +21,11 @@ import { isWebpackProduction } from '../utils/env.js';
 export function nodeTypescriptReactLibrary(env, argv) {
   return {
     target: ['node18', 'es2022'],
-    entry: { index: ['./src/index.ts'] },
     output: {
-      filename: '[name].cjs',
+      filename: '[name].[contenthash].cjs',
       clean: true,
       publicPath: 'auto',
-      assetModuleFilename: 'assets/[name][ext][query]',
+      assetModuleFilename: 'assets/[name].[contenthash][ext][query]',
       library: {
         type: 'commonjs2',
       },
@@ -152,6 +151,10 @@ export function nodeTypescriptReactLibrary(env, argv) {
       ],
     },
     optimization: {
+      runtimeChunk: 'single',
+      splitChunks: {
+        chunks: 'all',
+      },
       minimizer: [
         new TerserPlugin({
           terserOptions: {

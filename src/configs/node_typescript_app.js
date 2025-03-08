@@ -21,9 +21,8 @@ import { isWebpackProduction } from '../utils/env.js';
 export function nodeTypescriptApp(env, argv) {
   return {
     target: ['node18', 'es2022'],
-    entry: { index: ['./src/index.ts'] },
     output: {
-      filename: '[name].cjs',
+      filename: '[name].[contenthash].cjs',
       clean: true,
       publicPath: 'auto',
       assetModuleFilename: 'assets/[name].[contenthash][ext][query]',
@@ -149,6 +148,10 @@ export function nodeTypescriptApp(env, argv) {
       ],
     },
     optimization: {
+      runtimeChunk: 'single',
+      splitChunks: {
+        chunks: 'all',
+      },
       minimizer: [
         new TerserPlugin({
           terserOptions: {

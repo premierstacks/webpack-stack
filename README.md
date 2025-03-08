@@ -80,8 +80,8 @@ import {
   getWebpackMode,
   html,
   isWebpackBuild,
-  isWebpackDevelopment,
-  isWebpackProduction,
+  isWebpackModeDevelopment,
+  isWebpackModeProduction,
   isWebpackServe,
   isWebpackWatch,
   nodeTypescriptApp,
@@ -91,11 +91,9 @@ import {
   reactChunks,
   reactExternals,
   vendorChunks,
-  optimize,
   compress,
   compressBrotli,
   compressGzip,
-  splitChunks,
   removeAvailableModules,
 } from '@premierstacks/eslint-stack';
 ```

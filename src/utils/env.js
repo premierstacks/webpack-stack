@@ -27,10 +27,10 @@ export function getWebpackMode(env, argv) {
   return argv['mode'] || argv['nodeEnv'] || 'production';
 }
 
-export function isWebpackDevelopment(env, argv) {
+export function isWebpackModeDevelopment(env, argv) {
   return getWebpackMode(env, argv) === 'development';
 }
 
-export function isWebpackProduction(env, argv) {
+export function isWebpackModeProduction(env, argv) {
   return getWebpackMode(env, argv) === 'production';
 }

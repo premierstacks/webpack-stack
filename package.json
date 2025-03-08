@@ -60,11 +60,10 @@
   "sideEffects": false,
   "main": "./src/index.js",
   "scripts": {
-    "npm:install": "npm install --install-links --include prod --include dev --include peer --include optional",
-    "npm:update": "npm update --install-links --include prod --include dev --include peer --include optional",
-    "security": "run-s npm:audit",
-    "npm:audit": "npm audit --audit-level info --include prod --include dev --include peer --include optional",
-    "clean": "git clean -xfd ./node_modules ./package-lock.json",
+    "check": "run-s lint security",
+    "clean": "npm run clean:npm",
+    "clean:npm": "git clean -xfd ./node_modules ./package-lock.json",
+    "commit": "npm run local && npm run fix && npm run check",
     "fix": "run-s fix:eslint fix:prettier",
     "fix:eslint": "eslint --fix .",
     "fix:prettier": "prettier -w .",
@@ -72,6 +71,9 @@
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier -c .",
     "local": "npm run npm:install",
-    "check": "run-s lint security"
+    "npm:audit": "npm audit --audit-level info --include prod --include dev --include peer --include optional",
+    "npm:install": "npm install --install-links --include prod --include dev --include peer --include optional",
+    "npm:update": "npm update --install-links --include prod --include dev --include peer --include optional",
+    "security": "run-s npm:audit"
   }
 }

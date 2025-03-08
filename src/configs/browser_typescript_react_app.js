@@ -21,11 +21,10 @@ import { isWebpackProduction } from '../utils/env.js';
 export function browserTypescriptReactApp(env, argv) {
   return {
     target: ['web', 'es2020'],
-    entry: { index: ['./src/index.tsx', './src/index.scss'] },
     output: {
       filename: '[name].[contenthash].js',
       clean: true,
-      publicPath: '/',
+      publicPath: 'auto',
       assetModuleFilename: 'assets/[name].[contenthash][ext][query]',
     },
     devtool: isWebpackProduction(env, argv) ? 'hidden-nosources-source-map' : 'eval-source-map',
@@ -150,6 +149,9 @@ export function browserTypescriptReactApp(env, argv) {
     },
     optimization: {
       runtimeChunk: 'single',
+      splitChunks: {
+        chunks: 'all',
+      },
       minimizer: [
         new TerserPlugin({
           terserOptions: {

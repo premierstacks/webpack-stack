@@ -13,14 +13,6 @@
 
 import CompressionPlugin from 'compression-webpack-plugin';
 import { constants } from 'zlib';
-import { splitChunks } from './chunks.js';
-
-export function optimize(env, argv, config) {
-  splitChunks(env, argv, config);
-  removeAvailableModules(env, argv, config);
-
-  return config;
-}
 
 export function removeAvailableModules(env, argv, config) {
   config.optimization = config.optimization || {};
