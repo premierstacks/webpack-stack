@@ -11,20 +11,24 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-export function isWebpackServe(env, argv) {
-  return env.WEBPACK_SERVE || argv.env?.WEBPACK_SERVE || false;
+export function isWebpackServe(env) {
+  return env.WEBPACK_SERVE || false;
 }
 
-export function isWebpackBuild(env, argv) {
-  return env.WEBPACK_BUILD || argv.env?.WEBPACK_BUILD || false;
+export function isWebpackBuild(env) {
+  return env.WEBPACK_BUILD || false;
 }
 
-export function isWebpackWatch(env, argv) {
-  return env.WEBPACK_WATCH || argv.env?.WEBPACK_WATCH || false;
+export function isWebpackWatch(env) {
+  return env.WEBPACK_WATCH || false;
 }
 
 export function getWebpackMode(env, argv) {
-  return argv['mode'] || argv['nodeEnv'] || 'production';
+  return argv.mode;
+}
+
+export function getNodeEnv(env, argv) {
+  return argv.nodeEnv;
 }
 
 export function isWebpackModeDevelopment(env, argv) {
@@ -33,4 +37,16 @@ export function isWebpackModeDevelopment(env, argv) {
 
 export function isWebpackModeProduction(env, argv) {
   return getWebpackMode(env, argv) === 'production';
+}
+
+export function isNodeEnvDevelopment(env, argv) {
+  return getNodeEnv(env, argv) === 'development';
+}
+
+export function isNodeEnvProduction(env, argv) {
+  return getNodeEnv(env, argv) === 'production';
+}
+
+export function getAppEnv(env, argv) {
+  return env.APP_ENV || process.env.APP_ENV || getNodeEnv(env, argv);
 }

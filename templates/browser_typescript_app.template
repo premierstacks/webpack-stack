@@ -1,4 +1,4 @@
-import { browserTypescriptApp, copy, html, isWebpackProduction } from '@premierstacks/webpack-stack';
+import { browserTypescriptApp, copy, html, isWebpackModeProduction } from '@premierstacks/webpack-stack';
 import webpack from 'webpack';
 
 export default function (env, argv) {
@@ -8,7 +8,7 @@ export default function (env, argv) {
 
   config.plugins.push(
     new webpack.EnvironmentPlugin({
-      API_DNS: isWebpackProduction(env, argv) ? 'https://api.premierstacks.com' : 'http://localhost:8000',
+      API_DNS: isWebpackModeProduction(env, argv) ? 'https://api.premierstacks.com' : 'http://localhost:8000',
     }),
   );
 

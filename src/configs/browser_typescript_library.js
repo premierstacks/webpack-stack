@@ -16,7 +16,7 @@ import HtmlMinimizerPlugin from 'html-minimizer-webpack-plugin';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
-import { isWebpackProduction } from '../utils/env.js';
+import { isWebpackModeProduction } from '../utils/env.js';
 
 export function browserTypescriptLibrary(env, argv) {
   return {
@@ -30,7 +30,7 @@ export function browserTypescriptLibrary(env, argv) {
         type: 'commonjs2',
       },
     },
-    devtool: isWebpackProduction(env, argv) ? false : 'eval-source-map',
+    devtool: isWebpackModeProduction(env, argv) ? false : 'eval-source-map',
     devServer: {
       open: true,
       host: '0.0.0.0',
@@ -65,7 +65,7 @@ export function browserTypescriptLibrary(env, argv) {
                   allowJs: true,
                   allowSyntheticDefaultImports: true,
                   esModuleInterop: true,
-                  jsx: isWebpackProduction(env, argv) ? 'react-jsx' : 'react-jsxdev',
+                  jsx: isWebpackModeProduction(env, argv) ? 'react-jsx' : 'react-jsxdev',
                   resolveJsonModule: true,
                   isolatedModules: true,
                   verbatimModuleSyntax: true,
@@ -97,7 +97,7 @@ export function browserTypescriptLibrary(env, argv) {
                   allowJs: true,
                   allowSyntheticDefaultImports: true,
                   esModuleInterop: true,
-                  jsx: isWebpackProduction(env, argv) ? 'react-jsx' : 'react-jsxdev',
+                  jsx: isWebpackModeProduction(env, argv) ? 'react-jsx' : 'react-jsxdev',
                   resolveJsonModule: true,
                   isolatedModules: true,
                   verbatimModuleSyntax: true,

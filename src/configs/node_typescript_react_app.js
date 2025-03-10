@@ -16,7 +16,7 @@ import HtmlMinimizerPlugin from 'html-minimizer-webpack-plugin';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
-import { isWebpackProduction } from '../utils/env.js';
+import { isWebpackModeProduction } from '../utils/env.js';
 
 export function nodeTypescriptReactApp(env, argv) {
   return {
@@ -27,7 +27,7 @@ export function nodeTypescriptReactApp(env, argv) {
       publicPath: 'auto',
       assetModuleFilename: 'assets/[name].[contenthash][ext][query]',
     },
-    devtool: isWebpackProduction(env, argv) ? 'hidden-nosources-source-map' : 'eval-source-map',
+    devtool: isWebpackModeProduction(env, argv) ? 'hidden-nosources-source-map' : 'eval-source-map',
     devServer: {
       open: true,
       host: '0.0.0.0',
@@ -62,7 +62,7 @@ export function nodeTypescriptReactApp(env, argv) {
                   allowJs: true,
                   allowSyntheticDefaultImports: true,
                   esModuleInterop: true,
-                  jsx: isWebpackProduction(env, argv) ? 'react-jsx' : 'react-jsxdev',
+                  jsx: isWebpackModeProduction(env, argv) ? 'react-jsx' : 'react-jsxdev',
                   resolveJsonModule: true,
                   isolatedModules: true,
                   verbatimModuleSyntax: true,
@@ -94,7 +94,7 @@ export function nodeTypescriptReactApp(env, argv) {
                   allowJs: true,
                   allowSyntheticDefaultImports: true,
                   esModuleInterop: true,
-                  jsx: isWebpackProduction(env, argv) ? 'react-jsx' : 'react-jsxdev',
+                  jsx: isWebpackModeProduction(env, argv) ? 'react-jsx' : 'react-jsxdev',
                   resolveJsonModule: true,
                   isolatedModules: true,
                   verbatimModuleSyntax: true,
