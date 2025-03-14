@@ -29,7 +29,6 @@ export function browserTypescriptReactApp(env, argv) {
     },
     devtool: isWebpackModeProduction(env, argv) ? 'hidden-nosources-source-map' : 'eval-source-map',
     devServer: {
-      open: true,
       host: '0.0.0.0',
       port: 3000,
       historyApiFallback: true,
@@ -148,10 +147,6 @@ export function browserTypescriptReactApp(env, argv) {
       ],
     },
     optimization: {
-      runtimeChunk: 'single',
-      splitChunks: {
-        chunks: 'all',
-      },
       minimizer: [
         new TerserPlugin({
           terserOptions: {

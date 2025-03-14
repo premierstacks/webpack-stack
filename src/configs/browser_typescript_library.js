@@ -32,7 +32,6 @@ export function browserTypescriptLibrary(env, argv) {
     },
     devtool: isWebpackModeProduction(env, argv) ? false : 'eval-source-map',
     devServer: {
-      open: true,
       host: '0.0.0.0',
       port: 3000,
       historyApiFallback: true,
@@ -151,10 +150,6 @@ export function browserTypescriptLibrary(env, argv) {
       ],
     },
     optimization: {
-      runtimeChunk: 'single',
-      splitChunks: {
-        chunks: 'all',
-      },
       minimizer: [
         new TerserPlugin({
           terserOptions: {

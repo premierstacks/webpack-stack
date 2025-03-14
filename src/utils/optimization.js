@@ -16,7 +16,26 @@ import { constants } from 'zlib';
 
 export function removeAvailableModules(env, argv, config) {
   config.optimization = config.optimization || {};
+
   config.optimization.removeAvailableModules = true;
+
+  return config;
+}
+
+export function splitChunksAll(env, argv, config) {
+  config.optimization = config.optimization || {};
+
+  config.optimization.splitChunks = {
+    chunks: 'all',
+  };
+
+  return config;
+}
+
+export function runtimeSingle(env, argv, config) {
+  config.optimization = config.optimization || {};
+
+  config.optimization.runtime = 'single';
 
   return config;
 }

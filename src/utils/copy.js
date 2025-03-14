@@ -17,6 +17,7 @@ const def = { patterns: [{ from: './public', to: '.' }] };
 
 export function copy(env, argv, config, options = def) {
   config.plugins = config.plugins || [];
+
   config.plugins.push(new CopyPlugin({ ...def, ...options }));
 
   return config;

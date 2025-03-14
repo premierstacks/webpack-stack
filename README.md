@@ -76,6 +76,9 @@ import {
   browserTypescriptLibrary,
   browserTypescriptReactApp,
   browserTypescriptReactLibrary,
+  compress,
+  compressBrotli,
+  compressGzip,
   copy,
   getWebpackMode,
   html,
@@ -90,11 +93,10 @@ import {
   nodeTypescriptReactLibrary,
   reactChunks,
   reactExternals,
-  vendorChunks,
-  compress,
-  compressBrotli,
-  compressGzip,
   removeAvailableModules,
+  runtimeSingle,
+  splitChunksAll,
+  vendorChunks,
 } from '@premierstacks/eslint-stack';
 ```
 
