@@ -24,4 +24,3 @@ export * from './utils/copy.js';
 export * from './utils/env.js';
 export * from './utils/externals.js';
 export * from './utils/html.js';
-export * from './utils/optimization.js';

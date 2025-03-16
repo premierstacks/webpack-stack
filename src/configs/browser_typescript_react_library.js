@@ -11,11 +11,13 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
+import CompressionPlugin from 'compression-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import HtmlMinimizerPlugin from 'html-minimizer-webpack-plugin';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
+import { constants } from 'zlib';
 import { isWebpackModeProduction } from '../utils/env.js';
 
 export function browserTypescriptReactLibrary(env, argv) {
@@ -44,7 +46,22 @@ export function browserTypescriptReactLibrary(env, argv) {
     experiments: {
       futureDefaults: true,
     },
-    plugins: [],
+    plugins: production
+      ? [
+          new CompressionPlugin({
+            algorithm: 'gzip',
+            compressionOptions: { level: 9 },
+            minRatio: Infinity,
+            filename: '[path][base].gz[query][fragment]',
+          }),
+          new CompressionPlugin({
+            algorithm: 'brotliCompress',
+            compressionOptions: { [constants.BROTLI_PARAM_QUALITY]: constants.BROTLI_MAX_QUALITY },
+            minRatio: Infinity,
+            filename: '[path][base].br[query][fragment]',
+          }),
+        ]
+      : [],
     module: {
       rules: [
         {
