@@ -13,7 +13,7 @@
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-const def = { template: './node_modules/@premierstacks/webpack-stack/assets/index.html', filename: 'index.html', xhtml: true, inject: true, chunks: 'all', publicPath: '/' };
+const def = { template: './node_modules/@premierstacks/webpack-stack/assets/index.html', filename: 'index.html', xhtml: true, inject: true, chunks: 'all', publicPath: 'auto' };
 
 export function html(env, argv, config, options = def) {
   config.plugins = config.plugins || [];

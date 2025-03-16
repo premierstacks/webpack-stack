@@ -19,25 +19,27 @@ import TerserPlugin from 'terser-webpack-plugin';
 import { isWebpackModeProduction } from '../utils/env.js';
 
 export function nodeTypescriptLibrary(env, argv) {
+  const production = isWebpackModeProduction(env, argv);
+
   return {
-    target: ['node18', 'es2022'],
+    target: ['node22', 'es2022'],
     output: {
-      filename: '[name].[contenthash].cjs',
+      filename: '[contenthash].cjs',
+      assetModuleFilename: '[contenthash][ext][query][fragment]',
       clean: true,
       publicPath: 'auto',
-      assetModuleFilename: 'assets/[name].[contenthash][ext][query]',
       library: {
         type: 'commonjs2',
       },
     },
-    devtool: isWebpackModeProduction(env, argv) ? false : 'eval-source-map',
+    devtool: production ? false : 'eval-source-map',
     devServer: {
       host: '0.0.0.0',
       port: 3000,
       historyApiFallback: true,
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.jsx', '.mjs', '.js', '.cjs'],
+      extensions: ['.tsx', '.mts', '.ts', '.cts', '.jsx', '.mjs', '.js', '.cjs'],
     },
     experiments: {
       futureDefaults: true,
@@ -46,7 +48,7 @@ export function nodeTypescriptLibrary(env, argv) {
     module: {
       rules: [
         {
-          test: /\.(tsx|ts|jsx|mjs|js|cjs)$/i,
+          test: /\.(tsx|mts|ts|cts|jsx|mjs|js|cjs)$/i,
           resourceQuery: { not: [/raw/] },
           exclude: /[\\/]node_modules[\\/]/,
           use: [
@@ -55,16 +57,17 @@ export function nodeTypescriptLibrary(env, argv) {
               options: {
                 onlyCompileBundledFiles: true,
                 allowTsInNodeModules: true,
+                transpileOnly: false,
                 compilerOptions: {
                   declaration: true,
                   declarationMap: true,
                   sourceMap: true,
-                  module: 'ES2022',
-                  moduleResolution: 'Bundler',
+                  module: 'es2022',
+                  moduleResolution: 'bundler',
                   allowJs: true,
                   allowSyntheticDefaultImports: true,
                   esModuleInterop: true,
-                  jsx: isWebpackModeProduction(env, argv) ? 'react-jsx' : 'react-jsxdev',
+                  jsx: production ? 'react-jsx' : 'react-jsxdev',
                   resolveJsonModule: true,
                   isolatedModules: true,
                   verbatimModuleSyntax: true,
@@ -78,7 +81,7 @@ export function nodeTypescriptLibrary(env, argv) {
           ],
         },
         {
-          test: /\.(tsx|ts|jsx)$/i,
+          test: /\.(tsx|mts|ts|cts|jsx|mjs|js|cjs)$/i,
           resourceQuery: { not: [/raw/] },
           include: /[\\/]node_modules[\\/]/,
           use: [
@@ -87,16 +90,17 @@ export function nodeTypescriptLibrary(env, argv) {
               options: {
                 onlyCompileBundledFiles: true,
                 allowTsInNodeModules: true,
+                transpileOnly: true,
                 compilerOptions: {
                   declaration: false,
                   declarationMap: false,
                   sourceMap: false,
-                  module: 'ES2022',
-                  moduleResolution: 'Bundler',
+                  module: 'es2022',
+                  moduleResolution: 'bundler',
                   allowJs: true,
                   allowSyntheticDefaultImports: true,
                   esModuleInterop: true,
-                  jsx: isWebpackModeProduction(env, argv) ? 'react-jsx' : 'react-jsxdev',
+                  jsx: production ? 'react-jsx' : 'react-jsxdev',
                   resolveJsonModule: true,
                   isolatedModules: true,
                   verbatimModuleSyntax: true,
@@ -150,27 +154,19 @@ export function nodeTypescriptLibrary(env, argv) {
       ],
     },
     optimization: {
+      removeAvailableModules: production,
       minimizer: [
         new TerserPlugin({
+          extractComments: false,
           terserOptions: {
-            ecma: 2020,
-            toplevel: true,
-            module: true,
+            ecma: 2022,
             compress: {
               drop_console: true,
               drop_debugger: true,
               passes: 5,
-              toplevel: true,
-              ecma: 2020,
-              module: true,
             },
             format: {
-              ecma: 2020,
               comments: false,
-            },
-            mangle: {
-              toplevel: true,
-              module: true,
             },
           },
         }),
