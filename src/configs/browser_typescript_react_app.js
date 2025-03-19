@@ -26,8 +26,8 @@ export function browserTypescriptReactApp(env, argv) {
   return {
     target: ['web', 'es2020'],
     output: {
-      filename: '[contenthash].js',
-      assetModuleFilename: '[contenthash][ext][query][fragment]',
+      filename: 'immutable.[contenthash].js',
+      assetModuleFilename: 'immutable.[contenthash][ext][query][fragment]',
       clean: true,
       publicPath: 'auto',
     },

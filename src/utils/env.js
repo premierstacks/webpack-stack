@@ -46,7 +46,3 @@ export function isNodeEnvDevelopment(env, argv) {
 export function isNodeEnvProduction(env, argv) {
   return getNodeEnv(env, argv) === 'production';
 }
-
-export function getAppEnv(env, argv) {
-  return env.APP_ENV || process.env.APP_ENV || getNodeEnv(env, argv);
-}

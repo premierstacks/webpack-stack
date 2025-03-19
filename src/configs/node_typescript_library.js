@@ -26,8 +26,8 @@ export function nodeTypescriptLibrary(env, argv) {
   return {
     target: ['node22', 'es2022'],
     output: {
-      filename: '[contenthash].cjs',
-      assetModuleFilename: '[contenthash][ext][query][fragment]',
+      filename: 'immutable.[contenthash].cjs',
+      assetModuleFilename: 'immutable.[contenthash][ext][query][fragment]',
       clean: true,
       publicPath: 'auto',
       library: {
