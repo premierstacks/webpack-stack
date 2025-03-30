@@ -16,6 +16,7 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import HtmlMinimizerPlugin from 'html-minimizer-webpack-plugin';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import { constants } from 'zlib';
 import { isWebpackModeProduction } from './env.js';
@@ -40,11 +41,12 @@ export function createWebpackConfigBrowserTypescriptReactBabelApp(env, argv) {
     resolve: {
       extensions: ['.tsx', '.mts', '.ts', '.cts', '.jsx', '.mjs', '.js', '.cjs'],
     },
-    experiments: {
-      futureDefaults: true,
-    },
     plugins: production
       ? [
+          new MiniCssExtractPlugin({
+            filename: 'immutable.[contenthash].css',
+            chunkFilename: 'immutable.[contenthash].css',
+          }),
           new CompressionPlugin({
             algorithm: 'gzip',
             compressionOptions: { level: 9 },
@@ -71,10 +73,15 @@ export function createWebpackConfigBrowserTypescriptReactBabelApp(env, argv) {
           ],
         },
         {
-          test: /\.(scss|css)$/i,
+          test: /\.(sass|scss|css)$/i,
           resourceQuery: { not: [/raw/] },
-          type: 'css/auto',
           use: [
+            {
+              loader: production ? MiniCssExtractPlugin.loader : 'style-loader',
+            },
+            {
+              loader: 'css-loader',
+            },
             {
               loader: 'postcss-loader',
             },
