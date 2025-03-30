@@ -11,10 +11,10 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-export * from './configs/browser_app.js';
 export * from './configs/browser_typescript_app.js';
 export * from './configs/browser_typescript_library.js';
 export * from './configs/browser_typescript_react_app.js';
+export * from './configs/browser_typescript_react_babel_app.js';
 export * from './configs/browser_typescript_react_library.js';
 export * from './configs/node_typescript_app.js';
 export * from './configs/node_typescript_library.js';

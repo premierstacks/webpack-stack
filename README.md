@@ -75,6 +75,7 @@ import {
   browserTypescriptApp,
   browserTypescriptLibrary,
   browserTypescriptReactApp,
+  browserTypescriptReactBabelApp,
   browserTypescriptReactLibrary,
   copy,
   getWebpackMode,

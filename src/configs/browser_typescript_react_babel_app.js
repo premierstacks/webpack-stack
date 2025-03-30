@@ -20,7 +20,7 @@ import TerserPlugin from 'terser-webpack-plugin';
 import { constants } from 'zlib';
 import { isWebpackModeProduction } from '../utils/env.js';
 
-export function browserApp(env, argv) {
+export function browserTypescriptReactBabelApp(env, argv) {
   const production = isWebpackModeProduction(env, argv);
 
   return {
