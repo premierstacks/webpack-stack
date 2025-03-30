@@ -11,6 +11,6 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-import { recommended } from '@premierstacks/prettier-stack';
+import { createPrettierConfigBase } from '@premierstacks/prettier-stack';
 
-export default recommended();
+export default createPrettierConfigBase();

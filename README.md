@@ -72,26 +72,24 @@ Here are the available module exports:
 
 ```js
 import {
-  browserTypescriptApp,
-  browserTypescriptLibrary,
-  browserTypescriptReactApp,
-  browserTypescriptReactBabelApp,
-  browserTypescriptReactLibrary,
-  copy,
+  applyWebpackChunksReact,
+  applyWebpackChunksVendor,
+  applyWebpackExternalsReact,
+  applyWebpackPluginCopy,
+  applyWebpackPluginHtml,
+  createWebpackConfigBrowserTypescriptApp,
+  createWebpackConfigBrowserTypescriptLibrary,
+  createWebpackConfigBrowserTypescriptReactApp,
+  createWebpackConfigBrowserTypescriptReactBabelApp,
+  createWebpackConfigBrowserTypescriptReactLibrary,
+  createWebpackConfigNodeTypescriptApp,
+  createWebpackConfigNodeTypescriptLibrary,
   getWebpackMode,
-  html,
   isWebpackBuild,
   isWebpackModeDevelopment,
   isWebpackModeProduction,
   isWebpackServe,
   isWebpackWatch,
-  nodeTypescriptApp,
-  nodeTypescriptLibrary,
-  nodeTypescriptReactApp,
-  nodeTypescriptReactLibrary,
-  reactChunks,
-  reactExternals,
-  vendorChunks,
 } from '@premierstacks/eslint-stack';
 ```
 
@@ -99,12 +97,11 @@ import {
 
 Explore the predefined templates for various configurations in the [/templates](/templates) directory. These templates provide quick-start setups for different environments.
 
+**[/templates/browser_typescript_react_babel_app.template](/templates/browser_typescript_react_babel_app.template)**<br />
 **[/templates/browser_typescript_react_app.template](/templates/browser_typescript_react_app.template)**<br />
 **[/templates/browser_typescript_react_library.template](/templates/browser_typescript_react_library.template)**<br />
 **[/templates/browser_typescript_app.template](/templates/browser_typescript_app.template)**<br />
 **[/templates/browser_typescript_library.template](/templates/browser_typescript_library.template)**<br />
-**[/templates/node_typescript_react_app.template](/templates/node_typescript_react_app.template)**<br />
-**[/templates/node_typescript_react_library.template](/templates/node_typescript_react_library.template)**<br />
 **[/templates/node_typescript_app.template](/templates/node_typescript_app.template)**<br />
 **[/templates/node_typescript_library.template](/templates/node_typescript_library.template)**<br />
 
@@ -119,7 +116,7 @@ Ensure this package fits your needs and that you agree with the terms.
 Install using npm:
 
 ```bash
-npm install --save-dev github:premierstacks/webpack-stack
+npm install --save-dev github:premierstacks/webpack-stack#semver:^2.0
 ```
 
 **3. Select a template**
@@ -129,6 +126,8 @@ Choose one of the predefined configuration templates from the [/templates](/temp
 Use the `cp` command to copy it into your project as `/webpack.config.js`:
 
 ```bash
+cp ./node_modules/@premierstacks/webpack-stack/templates/browser_typescript_react_babel_app.template./webpack.config.js
+# or
 cp ./node_modules/@premierstacks/webpack-stack/templates/browser_typescript_react_app.template./webpack.config.js
 # or
 cp ./node_modules/@premierstacks/webpack-stack/templates/browser_typescript_react_library.template./webpack.config.js
@@ -136,10 +135,6 @@ cp ./node_modules/@premierstacks/webpack-stack/templates/browser_typescript_reac
 cp ./node_modules/@premierstacks/webpack-stack/templates/browser_typescript_app.template./webpack.config.js
 # or
 cp ./node_modules/@premierstacks/webpack-stack/templates/browser_typescript_library.template./webpack.config.js
-# or
-cp ./node_modules/@premierstacks/webpack-stack/templates/node_typescript_react_app.template./webpack.config.js
-# or
-cp ./node_modules/@premierstacks/webpack-stack/templates/node_typescript_react_library.template./webpack.config.js
 # or
 cp ./node_modules/@premierstacks/webpack-stack/templates/node_typescript_app.template./webpack.config.js
 # or

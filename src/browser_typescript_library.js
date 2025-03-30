@@ -18,9 +18,9 @@ import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import { constants } from 'zlib';
-import { isWebpackModeProduction } from '../utils/env.js';
+import { isWebpackModeProduction } from './env.js';
 
-export function browserTypescriptReactBabelApp(env, argv) {
+export function createWebpackConfigBrowserTypescriptLibrary(env, argv) {
   const production = isWebpackModeProduction(env, argv);
 
   return {
@@ -30,8 +30,11 @@ export function browserTypescriptReactBabelApp(env, argv) {
       assetModuleFilename: 'immutable.[contenthash][ext][query][fragment]',
       clean: true,
       publicPath: 'auto',
+      library: {
+        type: 'commonjs2',
+      },
     },
-    devtool: production ? 'hidden-nosources-source-map' : 'eval-source-map',
+    devtool: production ? false : 'eval-source-map',
     devServer: {
       host: '0.0.0.0',
       port: 3000,
@@ -66,7 +69,12 @@ export function browserTypescriptReactBabelApp(env, argv) {
           resourceQuery: { not: [/raw/] },
           use: [
             {
-              loader: 'babel-loader',
+              loader: 'ts-loader',
+              options: {
+                onlyCompileBundledFiles: true,
+                allowTsInNodeModules: true,
+                transpileOnly: true,
+              },
             },
           ],
         },

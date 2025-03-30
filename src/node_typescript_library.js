@@ -18,15 +18,15 @@ import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import { constants } from 'zlib';
-import { isWebpackModeProduction } from '../utils/env.js';
+import { isWebpackModeProduction } from './env.js';
 
-export function browserTypescriptLibrary(env, argv) {
+export function createWebpackConfigNodeTypescriptLibrary(env, argv) {
   const production = isWebpackModeProduction(env, argv);
 
   return {
-    target: ['web', 'es2020'],
+    target: ['node22', 'es2022'],
     output: {
-      filename: 'immutable.[contenthash].js',
+      filename: 'immutable.[contenthash].cjs',
       assetModuleFilename: 'immutable.[contenthash][ext][query][fragment]',
       clean: true,
       publicPath: 'auto',
@@ -67,40 +67,6 @@ export function browserTypescriptLibrary(env, argv) {
         {
           test: /\.(tsx|mts|ts|cts|jsx|mjs|js|cjs)$/i,
           resourceQuery: { not: [/raw/] },
-          exclude: /[\\/]node_modules[\\/]/,
-          use: [
-            {
-              loader: 'ts-loader',
-              options: {
-                onlyCompileBundledFiles: true,
-                allowTsInNodeModules: true,
-                transpileOnly: false,
-                compilerOptions: {
-                  declaration: true,
-                  declarationMap: true,
-                  sourceMap: true,
-                  module: 'preserve',
-                  moduleResolution: 'bundler',
-                  allowJs: true,
-                  allowSyntheticDefaultImports: true,
-                  esModuleInterop: true,
-                  jsx: production ? 'react-jsx' : 'react-jsxdev',
-                  resolveJsonModule: true,
-                  isolatedModules: true,
-                  verbatimModuleSyntax: true,
-                  allowArbitraryExtensions: true,
-                  allowImportingTsExtensions: false,
-                  noEmit: false,
-                  noEmitOnError: false,
-                },
-              },
-            },
-          ],
-        },
-        {
-          test: /\.(tsx|mts|ts|cts|jsx|mjs|js|cjs)$/i,
-          resourceQuery: { not: [/raw/] },
-          include: /[\\/]node_modules[\\/]/,
           use: [
             {
               loader: 'ts-loader',
@@ -108,24 +74,6 @@ export function browserTypescriptLibrary(env, argv) {
                 onlyCompileBundledFiles: true,
                 allowTsInNodeModules: true,
                 transpileOnly: true,
-                compilerOptions: {
-                  declaration: false,
-                  declarationMap: false,
-                  sourceMap: false,
-                  module: 'preserve',
-                  moduleResolution: 'bundler',
-                  allowJs: true,
-                  allowSyntheticDefaultImports: true,
-                  esModuleInterop: true,
-                  jsx: production ? 'react-jsx' : 'react-jsxdev',
-                  resolveJsonModule: true,
-                  isolatedModules: true,
-                  verbatimModuleSyntax: true,
-                  allowArbitraryExtensions: true,
-                  allowImportingTsExtensions: false,
-                  noEmit: false,
-                  noEmitOnError: false,
-                },
               },
             },
           ],
@@ -176,7 +124,7 @@ export function browserTypescriptLibrary(env, argv) {
         new TerserPlugin({
           extractComments: false,
           terserOptions: {
-            ecma: 2020,
+            ecma: 2022,
             compress: {
               drop_console: true,
               drop_debugger: true,

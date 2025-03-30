@@ -1,14 +1,14 @@
-import { browserTypescriptReactApp, copy, getNodeEnv, getWebpackMode, html } from '@premierstacks/webpack-stack';
+import { createWebpackConfigBrowserTypescriptReactApp, copy, getNodeEnv, getWebpackMode, html } from '@premierstacks/webpack-stack';
 import { execSync } from 'child_process';
 import webpack from 'webpack';
 
 export default function (env, argv) {
-  const config = browserTypescriptReactApp(env, argv);
+  const config = createWebpackConfigBrowserTypescriptReactApp(env, argv);
 
   config.devServer.port = 3000;
 
   config.entry = {
-    index: './src/index.ts',
+    index: ['./src/index.ts'],
   };
 
   const webpackMode = getWebpackMode(env, argv);
@@ -18,7 +18,7 @@ export default function (env, argv) {
     new webpack.EnvironmentPlugin({
       NODE_ENV: nodeEnv,
       WEBPACK_MODE: webpackMode,
-      APP_NAME: process.env.npm_package_name,
+      APP_NAME: process.env.npm_package_name || 'app',
       APP_VERSION: process.env.npm_package_version || execSync('git rev-parse HEAD').toString().trim(),
     }),
   );

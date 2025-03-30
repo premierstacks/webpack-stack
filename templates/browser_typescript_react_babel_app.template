@@ -1,12 +1,14 @@
-import { nodeTypescriptReactLibrary, getNodeEnv, getWebpackMode } from '@premierstacks/webpack-stack';
+import { createWebpackConfigBrowserTypescriptReactBabelApp, copy, getNodeEnv, getWebpackMode, html } from '@premierstacks/webpack-stack';
 import { execSync } from 'child_process';
 import webpack from 'webpack';
 
 export default function (env, argv) {
-  const config = nodeTypescriptReactLibrary(env, argv);
+  const config = createWebpackConfigBrowserTypescriptReactBabelApp(env, argv);
+
+  config.devServer.port = 3000;
 
   config.entry = {
-    index: './src/index.ts',
+    index: ['./src/index.ts'],
   };
 
   const webpackMode = getWebpackMode(env, argv);
@@ -16,7 +18,7 @@ export default function (env, argv) {
     new webpack.EnvironmentPlugin({
       NODE_ENV: nodeEnv,
       WEBPACK_MODE: webpackMode,
-      APP_NAME: process.env.npm_package_name,
+      APP_NAME: process.env.npm_package_name || 'app',
       APP_VERSION: process.env.npm_package_version || execSync('git rev-parse HEAD').toString().trim(),
     }),
   );
@@ -26,6 +28,9 @@ export default function (env, argv) {
       global: 'globalThis',
     }),
   );
+
+  html(env, argv, config, { inject: true, template: './src/index.html', filename: 'index.html', chunks: ['index'], publicPath: '/' });
+  copy(env, argv, config, { patterns: [{ from: './public', to: '.' }] });
 
   return config;
 }

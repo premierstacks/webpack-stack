@@ -11,7 +11,7 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-export function reactChunks(env, argv, config) {
+export function applyWebpackChunksReact(env, argv, config) {
   config.optimization = config.optimization || {};
   config.optimization.splitChunks = config.optimization.splitChunks || {};
   config.optimization.splitChunks.cacheGroups = config.optimization.splitChunks.cacheGroups || {};
@@ -25,7 +25,7 @@ export function reactChunks(env, argv, config) {
   return config;
 }
 
-export function vendorChunks(env, argv, config) {
+export function applyWebpackChunksVendor(env, argv, config) {
   config.optimization = config.optimization || {};
   config.optimization.splitChunks = config.optimization.splitChunks || {};
   config.optimization.splitChunks.cacheGroups = config.optimization.splitChunks.cacheGroups || {};
@@ -35,6 +35,17 @@ export function vendorChunks(env, argv, config) {
     name: 'vendor',
     chunks: 'all',
   };
+
+  return config;
+}
+
+export function applyWebpackExternalsReact(env, argv, config) {
+  config.externals = config.externals || {};
+
+  config.externals.react = 'react';
+  config.externals['react-dom'] = 'react-dom';
+  config.externals['react-router'] = 'react-router';
+  config.externals['react-router-dom'] = 'react-router-dom';
 
   return config;
 }

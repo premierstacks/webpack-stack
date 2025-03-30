@@ -24,11 +24,11 @@ export function isWebpackWatch(env) {
 }
 
 export function getWebpackMode(env, argv) {
-  return argv.mode;
+  return argv.mode || 'production';
 }
 
 export function getNodeEnv(env, argv) {
-  return argv.nodeEnv;
+  return argv.nodeEnv || 'production';
 }
 
 export function isWebpackModeDevelopment(env, argv) {
