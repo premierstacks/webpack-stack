@@ -262,3 +262,5 @@ export function createWebpackConfigBrowserTypescriptReactBabelApp(env, argv) {
     },
   };
 }
+
+export { createWebpackConfigBrowserTypescriptReactBabelApp as createWebpackConfigBrowserTypescriptBabelReactApp };
