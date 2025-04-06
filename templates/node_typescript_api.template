@@ -1,0 +1,29 @@
+import { createWebpackConfigNodeTypescriptApi, getNodeEnv, getWebpackMode } from '@premierstacks/webpack-stack';
+import { execSync } from 'child_process';
+import webpack from 'webpack';
+
+export default function (env, argv) {
+  const config = createWebpackConfigNodeTypescriptApi(env, argv);
+
+  config.entry = './src/index.ts';
+
+  const webpackMode = getWebpackMode(env, argv);
+  const nodeEnv = getNodeEnv(env, argv);
+
+  config.plugins.push(
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: nodeEnv,
+      WEBPACK_MODE: webpackMode,
+      APP_NAME: process.env.npm_package_name || 'app',
+      APP_VERSION: process.env.npm_package_version || execSync('git rev-parse HEAD').toString().trim(),
+    }),
+  );
+
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      global: 'globalThis',
+    }),
+  );
+
+  return config;
+}

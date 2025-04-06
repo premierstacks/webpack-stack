@@ -18,6 +18,7 @@ export * from './browser_typescript_react_babel_app.js';
 export * from './browser_typescript_react_library.js';
 export * from './chunks.js';
 export * from './env.js';
+export * from './node_typescript_api.js';
 export * from './node_typescript_app.js';
 export * from './node_typescript_library.js';
 export * from './plugins.js';

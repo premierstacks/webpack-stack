@@ -25,9 +25,9 @@ export function createWebpackConfigNodeTypescriptApp(env, argv) {
   const production = isWebpackModeProduction(env, argv);
 
   return {
-    target: ['node22', 'es2022'],
+    target: ['node23', 'es2024'],
     output: {
-      filename: 'immutable.[contenthash].cjs',
+      filename: 'bundle.cjs',
       assetModuleFilename: 'immutable.[contenthash][ext][query][fragment]',
       clean: true,
       publicPath: 'auto',
@@ -128,9 +128,9 @@ export function createWebpackConfigNodeTypescriptApp(env, argv) {
         new TerserPlugin({
           extractComments: false,
           terserOptions: {
-            ecma: 2022,
+            ecma: 2024,
             compress: {
-              drop_console: true,
+              drop_console: false,
               drop_debugger: true,
               passes: 5,
             },

@@ -83,6 +83,7 @@ import {
   createWebpackConfigBrowserTypescriptReactApp,
   createWebpackConfigBrowserTypescriptReactBabelApp,
   createWebpackConfigBrowserTypescriptReactLibrary,
+  createWebpackConfigNodeTypescriptApi,
   createWebpackConfigNodeTypescriptApp,
   createWebpackConfigNodeTypescriptLibrary,
   getWebpackMode,
@@ -105,6 +106,7 @@ Explore the predefined templates for various configurations in the [/templates](
 **[/templates/browser_typescript_app.template](/templates/browser_typescript_app.template)**<br />
 **[/templates/browser_typescript_library.template](/templates/browser_typescript_library.template)**<br />
 **[/templates/node_typescript_app.template](/templates/node_typescript_app.template)**<br />
+**[/templates/node_typescript_api.template](/templates/node_typescript_api.template)**<br />
 **[/templates/node_typescript_library.template](/templates/node_typescript_library.template)**<br />
 
 ## Getting Started
@@ -141,6 +143,8 @@ cp ./node_modules/@premierstacks/webpack-stack/templates/browser_typescript_app.
 cp ./node_modules/@premierstacks/webpack-stack/templates/browser_typescript_library.template./webpack.config.js
 # or
 cp ./node_modules/@premierstacks/webpack-stack/templates/node_typescript_app.template./webpack.config.js
+# or
+cp ./node_modules/@premierstacks/webpack-stack/templates/node_typescript_api.template./webpack.config.js
 # or
 cp ./node_modules/@premierstacks/webpack-stack/templates/node_typescript_library.template./webpack.config.js
 ```
