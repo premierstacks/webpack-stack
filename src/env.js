@@ -12,23 +12,23 @@
  */
 
 export function isWebpackServe(env) {
-  return env.WEBPACK_SERVE || false;
+  return env.WEBPACK_SERVE ?? false;
 }
 
 export function isWebpackBuild(env) {
-  return env.WEBPACK_BUILD || false;
+  return env.WEBPACK_BUILD ?? false;
 }
 
 export function isWebpackWatch(env) {
-  return env.WEBPACK_WATCH || false;
+  return env.WEBPACK_WATCH ?? false;
 }
 
 export function getWebpackMode(env, argv) {
-  return argv.mode || 'production';
+  return argv.mode ?? 'production';
 }
 
 export function getNodeEnv(env, argv) {
-  return argv.nodeEnv || 'production';
+  return argv.nodeEnv ?? 'production';
 }
 
 export function isWebpackModeDevelopment(env, argv) {

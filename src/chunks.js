@@ -12,9 +12,9 @@
  */
 
 export function applyWebpackChunksReact(env, argv, config) {
-  config.optimization = config.optimization || {};
-  config.optimization.splitChunks = config.optimization.splitChunks || {};
-  config.optimization.splitChunks.cacheGroups = config.optimization.splitChunks.cacheGroups || {};
+  config.optimization = config.optimization ?? {};
+  config.optimization.splitChunks = config.optimization.splitChunks ?? {};
+  config.optimization.splitChunks.cacheGroups = config.optimization.splitChunks.cacheGroups ?? {};
 
   config.optimization.splitChunks.cacheGroups.react = {
     test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom)[\\/]/,
@@ -26,9 +26,9 @@ export function applyWebpackChunksReact(env, argv, config) {
 }
 
 export function applyWebpackChunksVendor(env, argv, config) {
-  config.optimization = config.optimization || {};
-  config.optimization.splitChunks = config.optimization.splitChunks || {};
-  config.optimization.splitChunks.cacheGroups = config.optimization.splitChunks.cacheGroups || {};
+  config.optimization = config.optimization ?? {};
+  config.optimization.splitChunks = config.optimization.splitChunks ?? {};
+  config.optimization.splitChunks.cacheGroups = config.optimization.splitChunks.cacheGroups ?? {};
 
   config.optimization.splitChunks.cacheGroups.vendor = {
     test: /[\\/]node_modules[\\/]/,
@@ -40,7 +40,7 @@ export function applyWebpackChunksVendor(env, argv, config) {
 }
 
 export function applyWebpackExternalsReact(env, argv, config) {
-  config.externals = config.externals || {};
+  config.externals = config.externals ?? {};
 
   config.externals.react = 'react';
   config.externals['react-dom'] = 'react-dom';

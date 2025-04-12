@@ -17,7 +17,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 const applyWebpackPluginCopyDef = { patterns: [{ from: './public', to: '.' }] };
 
 export function applyWebpackPluginCopy(env, argv, config, options = applyWebpackPluginCopyDef) {
-  config.plugins = config.plugins || [];
+  config.plugins = config.plugins ?? [];
 
   config.plugins.push(new CopyPlugin({ ...applyWebpackPluginCopyDef, ...options }));
 
@@ -27,7 +27,7 @@ export function applyWebpackPluginCopy(env, argv, config, options = applyWebpack
 const applyWebpackPluginHtmlDef = { template: './node_modules/@premierstacks/webpack-stack/assets/index.html', filename: 'index.html', xhtml: true, inject: true, chunks: 'all', publicPath: 'auto' };
 
 export function applyWebpackPluginHtml(env, argv, config, options = applyWebpackPluginHtmlDef) {
-  config.plugins = config.plugins || [];
+  config.plugins = config.plugins ?? [];
 
   config.plugins.push(new HtmlWebpackPlugin({ ...applyWebpackPluginHtmlDef, ...options }));
 
