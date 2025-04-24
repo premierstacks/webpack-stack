@@ -11,6 +11,7 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-import { createEslintConfigNode, createEslintIgnorePatterns, createEslintOverridesForConfigs } from '@premierstacks/eslint-stack';
+import { createEslintConfigIgnores, createEslintConfigIgnoresRoot, createEslintConfigNode } from '@premierstacks/eslint-stack';
+import { defineConfig } from 'eslint/config';
 
-export default [...createEslintIgnorePatterns(), ...createEslintConfigNode(), ...createEslintOverridesForConfigs()];
+export default defineConfig([createEslintConfigIgnores(), createEslintConfigNode(), createEslintConfigIgnoresRoot()]);
