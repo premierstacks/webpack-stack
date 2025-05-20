@@ -14,22 +14,42 @@
 import CopyPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-const applyWebpackPluginCopyDef = { patterns: [{ from: './public', to: '.' }] };
+const applyWebpackPluginCopyDef = {
+  patterns: [
+    {
+      from: './public',
+      to: '.',
+    },
+  ],
+};
 
 export function applyWebpackPluginCopy(env, argv, config, options = applyWebpackPluginCopyDef) {
   config.plugins = config.plugins ?? [];
 
-  config.plugins.push(new CopyPlugin({ ...applyWebpackPluginCopyDef, ...options }));
+  config.plugins.push(new CopyPlugin({
+    ...applyWebpackPluginCopyDef,
+    ...options,
+  }));
 
   return config;
 }
 
-const applyWebpackPluginHtmlDef = { template: './node_modules/@premierstacks/webpack-stack/assets/index.html', filename: 'index.html', xhtml: true, inject: true, chunks: 'all', publicPath: 'auto' };
+const applyWebpackPluginHtmlDef = {
+  template: './node_modules/@premierstacks/webpack-stack/assets/index.html',
+  filename: 'index.html',
+  xhtml: true,
+  inject: true,
+  chunks: 'all',
+  publicPath: 'auto',
+};
 
 export function applyWebpackPluginHtml(env, argv, config, options = applyWebpackPluginHtmlDef) {
   config.plugins = config.plugins ?? [];
 
-  config.plugins.push(new HtmlWebpackPlugin({ ...applyWebpackPluginHtmlDef, ...options }));
+  config.plugins.push(new HtmlWebpackPlugin({
+    ...applyWebpackPluginHtmlDef,
+    ...options,
+  }));
 
   return config;
 }
