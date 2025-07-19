@@ -12,7 +12,7 @@
     "email": "chocholatom1997@gmail.com",
     "url": "https://github.com/premierstacks/webpack-stack/issues"
   },
-  "license": "Apache-2.0",
+  "license": "CC-BY-ND-4.0",
   "author": {
     "email": "chocholatom1997@gmail.com",
     "name": "Tomáš Chochola",
@@ -66,7 +66,7 @@
     "check": "npm run lint && npm run security",
     "clean": "npm run clean:npm",
     "clean:npm": "git clean -xfd ./node_modules ./package-lock.json",
-    "commit": "npm run local && npm run fix && npm run check",
+    "commit": "npm run fix && npm run check && npm run local",
     "fix": "npm run fix:eslint && npm run fix:prettier",
     "fix:eslint": "eslint --fix .",
     "fix:prettier": "prettier -w .",
