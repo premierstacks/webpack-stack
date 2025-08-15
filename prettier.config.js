@@ -11,6 +11,7 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-import { createPrettierConfigBase } from '@premierstacks/prettier-stack';
+import { PrettierStack } from '@premierstacks/prettier-stack';
 
-export default createPrettierConfigBase();
+// eslint-disable-next-line no-restricted-exports
+export default PrettierStack.Presets.base().build();

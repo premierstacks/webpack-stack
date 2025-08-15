@@ -11,17 +11,17 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-import CompressionPlugin from 'compression-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import HtmlMinimizerPlugin from 'html-minimizer-webpack-plugin';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
-import { constants } from 'zlib';
 import { isWebpackModeProduction } from './env.js';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-export function createWebpackConfigBrowserTypescriptReactBabelApp(env, argv) {
+export function createWebpackConfig(env, argv, options = {}) {
+  void options;
+
   const production = isWebpackModeProduction(env, argv);
 
   return {
@@ -41,26 +41,7 @@ export function createWebpackConfigBrowserTypescriptReactBabelApp(env, argv) {
     resolve: {
       extensions: ['.tsx', '.mts', '.ts', '.cts', '.jsx', '.mjs', '.js', '.cjs'],
     },
-    plugins: production
-      ? [
-          new MiniCssExtractPlugin({
-            filename: 'immutable.[contenthash].css',
-            chunkFilename: 'immutable.[contenthash].css',
-          }),
-          new CompressionPlugin({
-            algorithm: 'gzip',
-            compressionOptions: { level: 9 },
-            minRatio: Infinity,
-            filename: '[path][base].gz[query][fragment]',
-          }),
-          new CompressionPlugin({
-            algorithm: 'brotliCompress',
-            compressionOptions: { [constants.BROTLI_PARAM_QUALITY]: constants.BROTLI_MAX_QUALITY },
-            minRatio: Infinity,
-            filename: '[path][base].br[query][fragment]',
-          }),
-        ]
-      : [],
+    plugins: [],
     module: {
       rules: [
         {
@@ -68,7 +49,15 @@ export function createWebpackConfigBrowserTypescriptReactBabelApp(env, argv) {
           resourceQuery: { not: [/raw/] },
           use: [
             {
-              loader: 'babel-loader',
+              loader: 'ts-loader',
+              options: {
+                onlyCompileBundledFiles: true,
+                allowTsInNodeModules: true,
+                transpileOnly: true,
+                compilerOptions: {
+                  jsx: production ? 'react-jsx' : 'react-jsxdev',
+                },
+              },
             },
           ],
         },
@@ -262,5 +251,3 @@ export function createWebpackConfigBrowserTypescriptReactBabelApp(env, argv) {
     },
   };
 }
-
-export { createWebpackConfigBrowserTypescriptReactBabelApp as createWebpackConfigBrowserTypescriptBabelReactApp };

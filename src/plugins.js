@@ -13,43 +13,128 @@
 
 import CopyPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import CompressionPlugin from 'compression-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { constants } from 'zlib';
 
-const applyWebpackPluginCopyDef = {
-  patterns: [
-    {
-      from: './public',
-      to: '.',
-    },
-  ],
-};
+export function withPluginCopy(env, argv, config, options = {}, override = {}) {
+  void env;
+  void argv;
+  void options;
 
-export function applyWebpackPluginCopy(env, argv, config, options = applyWebpackPluginCopyDef) {
-  config.plugins = config.plugins ?? [];
+  const defaults = {
+    patterns: [
+      {
+        from: './public',
+        to: '.',
+      },
+    ],
+  };
 
-  config.plugins.push(new CopyPlugin({
-    ...applyWebpackPluginCopyDef,
-    ...options,
-  }));
-
-  return config;
+  return {
+    ...config,
+    plugins: [
+      ...config.plugins,
+      new CopyPlugin({
+        ...defaults,
+        ...override,
+      }),
+    ],
+  };
 }
 
-const applyWebpackPluginHtmlDef = {
-  template: './node_modules/@premierstacks/webpack-stack/assets/index.html',
-  filename: 'index.html',
-  xhtml: true,
-  inject: true,
-  chunks: 'all',
-  publicPath: 'auto',
-};
+export function withPluginHtml(env, argv, config, options = {}, override = {}) {
+  void env;
+  void argv;
+  void options;
 
-export function applyWebpackPluginHtml(env, argv, config, options = applyWebpackPluginHtmlDef) {
-  config.plugins = config.plugins ?? [];
+  const defaults = {
+    template: './node_modules/@premierstacks/webpack-stack/assets/index.html',
+    filename: 'index.html',
+    xhtml: true,
+    inject: true,
+    chunks: 'all',
+    publicPath: 'auto',
+  };
 
-  config.plugins.push(new HtmlWebpackPlugin({
-    ...applyWebpackPluginHtmlDef,
-    ...options,
-  }));
+  return {
+    ...config,
+    plugins: [
+      ...config.plugins,
+      new HtmlWebpackPlugin({
+        ...defaults,
+        ...override,
+      }),
+    ],
+  };
+}
 
-  return config;
+export function withPluginCss(env, argv, config, options = {}, override = {}) {
+  void env;
+  void argv;
+  void options;
+
+  const defaults = {
+    filename: 'immutable.[contenthash].css',
+    chunkFilename: 'immutable.[contenthash].css',
+  };
+
+  return {
+    ...config,
+    plugins: [
+      ...config.plugins,
+      new MiniCssExtractPlugin({
+        ...defaults,
+        ...override,
+      }),
+    ],
+  };
+}
+
+export function withPluginGzip(env, argv, config, options = {}, override = {}) {
+  void env;
+  void argv;
+  void options;
+
+  const defaults = {
+    algorithm: 'gzip',
+    compressionOptions: { level: 9 },
+    minRatio: Infinity,
+    filename: '[path][base].gz[query][fragment]',
+  };
+
+  return {
+    ...config,
+    plugins: [
+      ...config.plugins,
+      new CompressionPlugin({
+        ...defaults,
+        ...override,
+      }),
+    ],
+  };
+}
+
+export function withPluginBrotli(env, argv, config, options = {}, override = {}) {
+  void env;
+  void argv;
+  void options;
+
+  const defaults = {
+    algorithm: 'brotliCompress',
+    compressionOptions: { [constants.BROTLI_PARAM_QUALITY]: constants.BROTLI_MAX_QUALITY },
+    minRatio: Infinity,
+    filename: '[path][base].br[query][fragment]',
+  };
+
+  return {
+    ...config,
+    plugins: [
+      ...config.plugins,
+      new CompressionPlugin({
+        ...defaults,
+        ...override,
+      }),
+    ],
+  };
 }

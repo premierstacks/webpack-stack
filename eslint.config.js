@@ -11,7 +11,7 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-import { createEslintConfigIgnores, createEslintConfigIgnoresRoot, createEslintConfigNode } from '@premierstacks/eslint-stack';
-import { defineConfig } from 'eslint/config';
+import { EslintStack } from '@premierstacks/eslint-stack';
 
-export default defineConfig([createEslintConfigIgnores(), createEslintConfigNode(), createEslintConfigIgnoresRoot()]);
+// eslint-disable-next-line no-restricted-exports
+export default EslintStack.Presets.node().build();
