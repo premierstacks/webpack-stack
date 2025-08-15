@@ -43,35 +43,35 @@ export class WebpackStack {
   }
 
   copy(options = {}, override = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginCopy(this.#config, {
+    return new WebpackStack(this.#env, this.#argv, withPluginCopy(this.#env, this.#argv, this.#config, {
       ...this.#options,
       ...options,
     }, override), this.#options);
   }
 
   html(options = {}, override = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginHtml(this.#config, {
+    return new WebpackStack(this.#env, this.#argv, withPluginHtml(this.#env, this.#argv, this.#config, {
       ...this.#options,
       ...options,
     }, override), this.#options);
   }
 
   css(options = {}, override = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginCss(this.#config, {
+    return new WebpackStack(this.#env, this.#argv, withPluginCss(this.#env, this.#argv, this.#config, {
       ...this.#options,
       ...options,
     }, override), this.#options);
   }
 
   gzip(options = {}, override = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginGzip(this.#config, {
+    return new WebpackStack(this.#env, this.#argv, withPluginGzip(this.#env, this.#argv, this.#config, {
       ...this.#options,
       ...options,
     }, override), this.#options);
   }
 
   brotli(options = {}, override = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginBrotli(this.#config, {
+    return new WebpackStack(this.#env, this.#argv, withPluginBrotli(this.#env, this.#argv, this.#config, {
       ...this.#options,
       ...options,
     }, override), this.#options);
