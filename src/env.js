@@ -11,6 +11,8 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
+import { execSync } from 'child_process';
+
 export function isWebpackServe(env) {
   return env.WEBPACK_SERVE ?? false;
 }
@@ -45,4 +47,16 @@ export function isNodeEnvDevelopment(env, argv) {
 
 export function isNodeEnvProduction(env, argv) {
   return getNodeEnv(env, argv) === 'production';
+}
+
+export function getAppEnv(env, argv) {
+  return env.APP_ENV ?? argv.appEnv ?? process.env.APP_ENV ?? 'production';
+}
+
+export function getAppName(env, argv) {
+  return env.APP_NAME ?? argv.appName ?? process.env.APP_NAME ?? process.env.npm_package_name ?? 'webpack-stack';
+}
+
+export function getAppVersion(env, argv) {
+  return env.APP_VERSION ?? argv.appVersion ?? process.env.APP_VERSION ?? process.env.npm_package_version ?? execSync('git rev-parse HEAD').toString().trim(); // eslint-disable-line sonarjs/no-os-command-from-path
 }

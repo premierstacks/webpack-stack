@@ -13,16 +13,30 @@
 
 import { WebpackStack } from './builder.js';
 
-export function base(env, argv, preset = {}, options = {}) {
+export function base(env, argv, options = {}) {
   const {
+    entry = {
+      index: ['./src/index.ts'],
+    },
     html = true,
     copy = true,
     brotli = true,
     gzip = true,
-    css = true,
-  } = preset;
+    environment = true,
+    define = true,
+  } = options;
 
-  let config = WebpackStack.create(env, argv, options);
+  let config = WebpackStack.create(env, argv);
+
+  config.entry(entry);
+
+  if (environment) {
+    config = config.environment();
+  }
+
+  if (define) {
+    config = config.define();
+  }
 
   if (config.isProduction) {
     if (brotli) {
@@ -31,10 +45,6 @@ export function base(env, argv, preset = {}, options = {}) {
 
     if (gzip) {
       config = config.gzip();
-    }
-
-    if (css) {
-      config = config.css();
     }
   }
 

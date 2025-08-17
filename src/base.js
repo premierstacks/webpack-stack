@@ -17,17 +17,15 @@ import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import { isWebpackModeProduction } from './env.js';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-export function createWebpackConfig(env, argv, options = {}) {
-  void options;
-
+export function createWebpackConfig(env, argv) {
   const production = isWebpackModeProduction(env, argv);
 
   return {
     target: ['web', 'es2020'],
     output: {
       filename: 'immutable.[contenthash].js',
+      chunkFilename: 'immutable.[contenthash].js',
       assetModuleFilename: 'immutable.[contenthash][ext][query][fragment]',
       clean: true,
       publicPath: 'auto',
@@ -37,6 +35,9 @@ export function createWebpackConfig(env, argv, options = {}) {
       host: '0.0.0.0',
       port: 3000,
       historyApiFallback: true,
+    },
+    experiments: {
+      futureDefaults: true,
     },
     resolve: {
       extensions: ['.tsx', '.mts', '.ts', '.cts', '.jsx', '.mjs', '.js', '.cjs'],
@@ -49,28 +50,15 @@ export function createWebpackConfig(env, argv, options = {}) {
           resourceQuery: { not: [/raw/] },
           use: [
             {
-              loader: 'ts-loader',
-              options: {
-                onlyCompileBundledFiles: true,
-                allowTsInNodeModules: true,
-                transpileOnly: true,
-                compilerOptions: {
-                  jsx: production ? 'react-jsx' : 'react-jsxdev',
-                },
-              },
+              loader: 'babel-loader',
             },
           ],
         },
         {
           test: /\.(sass|scss|css)$/i,
           resourceQuery: { not: [/raw/] },
+          type: 'css',
           use: [
-            {
-              loader: production ? MiniCssExtractPlugin.loader : 'style-loader',
-            },
-            {
-              loader: 'css-loader',
-            },
             {
               loader: 'postcss-loader',
             },

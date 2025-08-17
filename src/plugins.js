@@ -14,13 +14,13 @@
 import CopyPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { constants } from 'zlib';
+import webpack from 'webpack';
+import { getAppEnv, getAppName, getAppVersion, getNodeEnv, getWebpackMode } from './env';
 
-export function withPluginCopy(env, argv, config, options = {}, override = {}) {
+export function withPluginCopy(env, argv, config, options = {}) {
   void env;
   void argv;
-  void options;
 
   const defaults = {
     patterns: [
@@ -37,16 +37,15 @@ export function withPluginCopy(env, argv, config, options = {}, override = {}) {
       ...config.plugins,
       new CopyPlugin({
         ...defaults,
-        ...override,
+        ...options,
       }),
     ],
   };
 }
 
-export function withPluginHtml(env, argv, config, options = {}, override = {}) {
+export function withPluginHtml(env, argv, config, options = {}) {
   void env;
   void argv;
-  void options;
 
   const defaults = {
     template: './node_modules/@premierstacks/webpack-stack/assets/index.html',
@@ -63,38 +62,15 @@ export function withPluginHtml(env, argv, config, options = {}, override = {}) {
       ...config.plugins,
       new HtmlWebpackPlugin({
         ...defaults,
-        ...override,
+        ...options,
       }),
     ],
   };
 }
 
-export function withPluginCss(env, argv, config, options = {}, override = {}) {
+export function withPluginGzip(env, argv, config, options = {}) {
   void env;
   void argv;
-  void options;
-
-  const defaults = {
-    filename: 'immutable.[contenthash].css',
-    chunkFilename: 'immutable.[contenthash].css',
-  };
-
-  return {
-    ...config,
-    plugins: [
-      ...config.plugins,
-      new MiniCssExtractPlugin({
-        ...defaults,
-        ...override,
-      }),
-    ],
-  };
-}
-
-export function withPluginGzip(env, argv, config, options = {}, override = {}) {
-  void env;
-  void argv;
-  void options;
 
   const defaults = {
     algorithm: 'gzip',
@@ -109,16 +85,15 @@ export function withPluginGzip(env, argv, config, options = {}, override = {}) {
       ...config.plugins,
       new CompressionPlugin({
         ...defaults,
-        ...override,
+        ...options,
       }),
     ],
   };
 }
 
-export function withPluginBrotli(env, argv, config, options = {}, override = {}) {
+export function withPluginBrotli(env, argv, config, options = {}) {
   void env;
   void argv;
-  void options;
 
   const defaults = {
     algorithm: 'brotliCompress',
@@ -133,7 +108,43 @@ export function withPluginBrotli(env, argv, config, options = {}, override = {})
       ...config.plugins,
       new CompressionPlugin({
         ...defaults,
-        ...override,
+        ...options,
+      }),
+    ],
+  };
+}
+
+export function withPluginEnvironment(env, argv, config, options = {}) {
+  void env;
+  void argv;
+
+  return {
+    ...config,
+    plugins: [
+      ...config.plugins,
+      new webpack.EnvironmentPlugin({
+        NODE_ENV: getNodeEnv(env, argv),
+        WEBPACK_MODE: getWebpackMode(env, argv),
+        APP_NAME: getAppName(env, argv),
+        APP_VERSION: getAppVersion(env, argv),
+        APP_ENV: getAppEnv(env, argv),
+        ...options,
+      }),
+    ],
+  };
+}
+
+export function withPluginDefine(env, argv, config, options = {}) {
+  void env;
+  void argv;
+
+  return {
+    ...config,
+    plugins: [
+      ...config.plugins,
+      new webpack.DefinePlugin({
+        global: 'globalThis',
+        ...options,
       }),
     ],
   };

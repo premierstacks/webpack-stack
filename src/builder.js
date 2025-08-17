@@ -12,76 +12,65 @@
  */
 
 import { createWebpackConfig } from './base.js';
-import { getNodeEnv, getWebpackMode, isNodeEnvDevelopment, isWebpackBuild, isWebpackModeDevelopment, isWebpackModeProduction, isWebpackServe, isWebpackWatch } from './env.js';
-import { withPluginBrotli, withPluginCopy, withPluginCss, withPluginGzip, withPluginHtml } from './plugins.js';
+import { getAppEnv, getAppName, getAppVersion, getNodeEnv, getWebpackMode, isNodeEnvDevelopment, isWebpackBuild, isWebpackModeDevelopment, isWebpackModeProduction, isWebpackServe, isWebpackWatch } from './env.js';
+import { withPluginBrotli, withPluginCopy, withPluginDefine, withPluginEnvironment, withPluginGzip, withPluginHtml } from './plugins.js';
 import * as presets from './presets.js';
 
 export class WebpackStack {
   #env;
   #argv;
   #config;
-  #options;
 
-  constructor(env, argv, config, options = {}) {
+  constructor(env, argv, config) {
     this.#env = env;
     this.#argv = argv;
     this.#config = config;
-    this.#options = options;
   }
 
-  static create(env, argv, options = {}) {
+  static create(env, argv) {
     if (isNodeEnvDevelopment(env, argv)) {
       throw new Error('https://nodejs.org/en/learn/getting-started/nodejs-the-difference-between-development-and-production');
     }
 
-    const merged = {
-      ...options,
-      environment: options.environment ?? process.env.NODE_ENV ?? 'production',
-    };
-
-    return new WebpackStack(env, argv, createWebpackConfig(env, argv, merged), merged);
+    return new WebpackStack(env, argv, createWebpackConfig(env, argv));
   }
 
-  copy(options = {}, override = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginCopy(this.#env, this.#argv, this.#config, {
-      ...this.#options,
-      ...options,
-    }, override), this.#options);
+  copy(options = {}) {
+    return new WebpackStack(this.#env, this.#argv, withPluginCopy(this.#env, this.#argv, this.#config, options));
   }
 
-  html(options = {}, override = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginHtml(this.#env, this.#argv, this.#config, {
-      ...this.#options,
-      ...options,
-    }, override), this.#options);
+  html(options = {}) {
+    return new WebpackStack(this.#env, this.#argv, withPluginHtml(this.#env, this.#argv, this.#config, options));
   }
 
-  css(options = {}, override = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginCss(this.#env, this.#argv, this.#config, {
-      ...this.#options,
-      ...options,
-    }, override), this.#options);
+  gzip(options = {}) {
+    return new WebpackStack(this.#env, this.#argv, withPluginGzip(this.#env, this.#argv, this.#config, options));
   }
 
-  gzip(options = {}, override = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginGzip(this.#env, this.#argv, this.#config, {
-      ...this.#options,
-      ...options,
-    }, override), this.#options);
+  brotli(options = {}) {
+    return new WebpackStack(this.#env, this.#argv, withPluginBrotli(this.#env, this.#argv, this.#config, options));
   }
 
-  brotli(options = {}, override = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginBrotli(this.#env, this.#argv, this.#config, {
-      ...this.#options,
-      ...options,
-    }, override), this.#options);
+  environment(options = {}) {
+    return new WebpackStack(this.#env, this.#argv, withPluginEnvironment(this.#env, this.#argv, this.#config, options));
   }
 
-  options(options) {
-    return new WebpackStack(this.#env, this.#argv, this.#config, {
-      ...this.#options,
-      ...options,
+  define(options = {}) {
+    return new WebpackStack(this.#env, this.#argv, withPluginDefine(this.#env, this.#argv, this.#config, options));
+  }
+
+  entry(options = {}) {
+    return new WebpackStack(this.#env, this.#argv, {
+      ...this.#config,
+      entry: {
+        ...this.#config.entry,
+        ...options,
+      },
     });
+  }
+
+  merge(callable) {
+    return new WebpackStack(this.#env, this.#argv, callable(this.#env, this.#argv, this.#config));
   }
 
   build() {
@@ -118,5 +107,17 @@ export class WebpackStack {
 
   get nodeEnv() {
     return getNodeEnv(this.#env, this.#argv);
+  }
+
+  get appEnv() {
+    return getAppEnv(this.#env, this.#argv);
+  }
+
+  get appVersion() {
+    return getAppVersion(this.#env, this.#argv);
+  }
+
+  get appName() {
+    return getAppName(this.#env, this.#argv);
   }
 }
