@@ -294,7 +294,7 @@ export class WebpackStack {
       xhtml: true,
       inject: true,
       chunks: 'all',
-      publicPath: 'auto',
+      publicPath: '/',
     };
 
     return new this.constructor(this.#env, this.#argv, {
