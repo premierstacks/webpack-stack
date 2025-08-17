@@ -18,24 +18,22 @@ export function base(env, argv, options = {}) {
     entry = {
       index: ['./src/index.ts'],
     },
-    html = true,
-    copy = true,
     brotli = true,
     gzip = true,
     environment = true,
     define = true,
+    html = false,
+    copy = false,
   } = options;
 
-  let config = WebpackStack.create(env, argv);
-
-  config.entry(entry);
+  let config = WebpackStack.create(env, argv).base().entry(entry);
 
   if (environment) {
-    config = config.environment();
+    config = config.baseEnvironment();
   }
 
   if (define) {
-    config = config.define();
+    config = config.baseDefine();
   }
 
   if (config.isProduction) {

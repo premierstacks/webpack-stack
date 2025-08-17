@@ -11,9 +11,17 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-import { createWebpackConfig } from './base.js';
-import { getAppEnv, getAppName, getAppVersion, getNodeEnv, getWebpackMode, isNodeEnvDevelopment, isWebpackBuild, isWebpackModeDevelopment, isWebpackModeProduction, isWebpackServe, isWebpackWatch } from './env.js';
-import { withPluginBrotli, withPluginCopy, withPluginDefine, withPluginEnvironment, withPluginGzip, withPluginHtml } from './plugins.js';
+import { execSync } from 'child_process';
+import CompressionPlugin from 'compression-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import HtmlMinimizerPlugin from 'html-minimizer-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
+import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import webpack from 'webpack';
+import { constants } from 'zlib';
 import * as presets from './presets.js';
 
 export class WebpackStack {
@@ -28,39 +36,358 @@ export class WebpackStack {
   }
 
   static create(env, argv) {
-    if (isNodeEnvDevelopment(env, argv)) {
-      throw new Error('https://nodejs.org/en/learn/getting-started/nodejs-the-difference-between-development-and-production');
-    }
+    return new this(env, argv, {});
+  }
 
-    return new WebpackStack(env, argv, createWebpackConfig(env, argv));
+  base(options = {}) {
+    const defaults = {
+      target: ['web', 'es2020'],
+      output: {
+        filename: 'immutable.[contenthash].js',
+        chunkFilename: 'immutable.[contenthash].js',
+        assetModuleFilename: 'immutable.[contenthash][ext][query][fragment]',
+        clean: true,
+        publicPath: 'auto',
+      },
+      devtool: this.isProduction ? 'hidden-nosources-source-map' : 'eval-source-map',
+      devServer: {
+        host: '0.0.0.0',
+        port: 3000,
+        historyApiFallback: true,
+      },
+      experiments: {
+        futureDefaults: true,
+      },
+      resolve: {
+        extensions: ['.tsx', '.mts', '.ts', '.cts', '.jsx', '.mjs', '.js', '.cjs'],
+      },
+      plugins: [],
+      module: {
+        rules: [
+          {
+            test: /\.(tsx|mts|ts|cts|jsx|mjs|js|cjs)$/i,
+            resourceQuery: { not: [/raw/] },
+            use: [
+              {
+                loader: 'babel-loader',
+              },
+            ],
+          },
+          {
+            test: /\.(sass|scss|css)$/i,
+            resourceQuery: { not: [/raw/] },
+            type: 'css/auto',
+            use: [
+              {
+                loader: 'postcss-loader',
+              },
+              {
+                loader: 'sass-loader',
+              },
+            ],
+          },
+          {
+            test: /\.(html|php)$/i,
+            resourceQuery: { not: [/raw/] },
+            use: [
+              {
+                loader: 'html-loader',
+              },
+            ],
+          },
+          {
+            resourceQuery: /source/,
+            type: 'asset/source',
+          },
+          {
+            resourceQuery: /resource/,
+            type: 'asset/resource',
+          },
+          {
+            resourceQuery: /inline/,
+            type: 'asset/inline',
+          },
+          {
+            resourceQuery: /asset/,
+            type: 'asset',
+          },
+        ],
+      },
+      optimization: {
+        removeAvailableModules: this.isProduction,
+        minimizer: [
+          new TerserPlugin({
+            extractComments: false,
+            terserOptions: {
+              ecma: 2020,
+              compress: {
+                drop_console: true,
+                drop_debugger: true,
+                passes: 5,
+              },
+              format: {
+                comments: false,
+              },
+            },
+          }),
+          new CssMinimizerPlugin(),
+          new HtmlMinimizerPlugin(),
+          new JsonMinimizerPlugin(),
+          new ImageMinimizerPlugin({
+            minimizer: {
+              implementation: ImageMinimizerPlugin.sharpMinify,
+              options: {
+                encodeOptions: {
+                  jpeg: {
+                    quality: 100,
+                  },
+                  webp: {
+                    lossless: true,
+                    effort: 6,
+                  },
+                  avif: {
+                    lossless: true,
+                    effort: 9,
+                  },
+                  heif: {
+                    lossless: true,
+                    effort: 9,
+                  },
+                  jxl: {
+                    lossless: true,
+                    effort: 9,
+                  },
+                  jp2: {
+                    lossless: true,
+                  },
+                  tiff: {
+                    quality: 100,
+                  },
+                  png: {
+                    effort: 10,
+                  },
+                  gif: {
+                    effort: 10,
+                  },
+                },
+              },
+            },
+            generator: [
+              {
+                preset: 'avif',
+                type: 'import',
+                implementation: ImageMinimizerPlugin.sharpGenerate,
+                options: {
+                  encodeOptions: {
+                    avif: {
+                      quality: 60,
+                      lossless: false,
+                      effort: 9,
+                      chromaSubsampling: '4:2:0',
+                      bitdepth: 8,
+                    },
+                  },
+                },
+              },
+              {
+                preset: 'webp',
+                type: 'import',
+                implementation: ImageMinimizerPlugin.sharpGenerate,
+                options: {
+                  encodeOptions: {
+                    webp: {
+                      quality: 90,
+                      alphaQuality: 100,
+                      lossless: false,
+                      nearLossless: false,
+                      smartSubsample: true,
+                      effort: 6,
+                      minSize: false,
+                      mixed: false,
+                      preset: 'default',
+                    },
+                  },
+                },
+              },
+              {
+                preset: 'png',
+                type: 'import',
+                implementation: ImageMinimizerPlugin.sharpGenerate,
+                options: {
+                  encodeOptions: {
+                    png: {
+                      progressive: true,
+                      compressionLevel: 9,
+                      adaptiveFiltering: true,
+                      quality: 100,
+                      effort: 10,
+                      palette: true,
+                      colours: 256,
+                      colors: 256,
+                      dither: 0.8,
+                    },
+                  },
+                },
+              },
+              {
+                preset: 'jpg',
+                type: 'import',
+                implementation: ImageMinimizerPlugin.sharpGenerate,
+                options: {
+                  encodeOptions: {
+                    jpg: {
+                      quality: 80,
+                      progressive: true,
+                      chromaSubsampling: '4:4:4',
+                      trellisQuantisation: true,
+                      overshootDeringing: true,
+                      optimiseScans: true,
+                      optimizeScans: true,
+                      optimiseCoding: true,
+                      optimizeCoding: true,
+                      quantisationTable: 2,
+                      quantizationTable: 2,
+                      mozjpeg: true,
+                    },
+                  },
+                },
+              },
+            ],
+          }),
+        ],
+      },
+    };
+
+    return new this.constructor(this.#env, this.#argv, {
+      ...this.#config,
+      ...defaults,
+      ...options,
+    });
   }
 
   copy(options = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginCopy(this.#env, this.#argv, this.#config, options));
+    const defaults = {
+      patterns: [
+        {
+          from: './public',
+          to: '.',
+        },
+      ],
+    };
+
+    return new this.constructor(this.#env, this.#argv, {
+      ...this.#config,
+      plugins: [
+        ...this.#config.plugins,
+        new CopyPlugin({
+          ...defaults,
+          ...options,
+        }),
+      ],
+    });
   }
 
   html(options = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginHtml(this.#env, this.#argv, this.#config, options));
+    const defaults = {
+      template: './node_modules/@premierstacks/webpack-stack/assets/index.html',
+      filename: 'index.html',
+      xhtml: true,
+      inject: true,
+      chunks: 'all',
+      publicPath: 'auto',
+    };
+
+    return new this.constructor(this.#env, this.#argv, {
+      ...this.#config,
+      plugins: [
+        ...this.#config.plugins,
+        new HtmlWebpackPlugin({
+          ...defaults,
+          ...options,
+        }),
+      ],
+    });
   }
 
   gzip(options = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginGzip(this.#env, this.#argv, this.#config, options));
+    const defaults = {
+      algorithm: 'gzip',
+      compressionOptions: { level: 9 },
+      minRatio: Infinity,
+      filename: '[path][base].gz[query][fragment]',
+    };
+
+    return new this.constructor(this.#env, this.#argv, {
+      ...this.#config,
+      plugins: [
+        ...this.#config.plugins,
+        new CompressionPlugin({
+          ...defaults,
+          ...options,
+        }),
+      ],
+    });
   }
 
   brotli(options = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginBrotli(this.#env, this.#argv, this.#config, options));
+    const defaults = {
+      algorithm: 'brotliCompress',
+      compressionOptions: { [constants.BROTLI_PARAM_QUALITY]: constants.BROTLI_MAX_QUALITY },
+      minRatio: Infinity,
+      filename: '[path][base].br[query][fragment]',
+    };
+
+    return new this.constructor(this.#env, this.#argv, {
+      ...this.#config,
+      plugins: [
+        ...this.#config.plugins,
+        new CompressionPlugin({
+          ...defaults,
+          ...options,
+        }),
+      ],
+    });
   }
 
   environment(options = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginEnvironment(this.#env, this.#argv, this.#config, options));
+    return new this.constructor(this.#env, this.#argv, {
+      ...this.#config,
+      plugins: [
+        ...this.#config.plugins,
+        new webpack.EnvironmentPlugin(options),
+      ],
+    });
+  }
+
+  baseEnvironment(options = {}) {
+    return this.environment({
+      WEBPACK_MODE: this.mode,
+      APP_NAME: this.appName,
+      APP_VERSION: this.appVersion,
+      APP_ENV: this.appEnv,
+      ...options,
+    });
   }
 
   define(options = {}) {
-    return new WebpackStack(this.#env, this.#argv, withPluginDefine(this.#env, this.#argv, this.#config, options));
+    return new this.constructor(this.#env, this.#argv, {
+      ...this.#config,
+      plugins: [
+        ...this.#config.plugins,
+        new webpack.DefinePlugin(options),
+      ],
+    });
+  }
+
+  baseDefine(options = {}) {
+    return this.define({
+      global: 'globalThis',
+      ...options,
+    });
   }
 
   entry(options = {}) {
-    return new WebpackStack(this.#env, this.#argv, {
+    return new this.constructor(this.#env, this.#argv, {
       ...this.#config,
       entry: {
         ...this.#config.entry,
@@ -70,7 +397,7 @@ export class WebpackStack {
   }
 
   merge(callable) {
-    return new WebpackStack(this.#env, this.#argv, callable(this.#env, this.#argv, this.#config));
+    return new this.constructor(this.#env, this.#argv, callable(this.#env, this.#argv, this.#config));
   }
 
   build() {
@@ -82,42 +409,42 @@ export class WebpackStack {
   }
 
   get isProduction() {
-    return isWebpackModeProduction(this.#env, this.#argv);
+    return this.mode === 'production';
   }
 
   get isDevelopment() {
-    return isWebpackModeDevelopment(this.#env, this.#argv);
+    return this.mode === 'development';
   }
 
   get isBuild() {
-    return isWebpackBuild(this.#env, this.#argv);
+    return this.#env.WEBPACK_BUILD ?? false;
   }
 
   get isWatched() {
-    return isWebpackWatch(this.#env, this.#argv);
+    return this.#env.WEBPACK_WATCH ?? false;
   }
 
   get isServed() {
-    return isWebpackServe(this.#env, this.#argv);
+    return this.#env.WEBPACK_SERVE ?? false;
   }
 
   get mode() {
-    return getWebpackMode(this.#env, this.#argv);
+    return this.#argv.mode ?? 'production';
   }
 
   get nodeEnv() {
-    return getNodeEnv(this.#env, this.#argv);
+    return this.#argv.nodeEnv ?? 'production';
   }
 
   get appEnv() {
-    return getAppEnv(this.#env, this.#argv);
+    return this.#env.APP_ENV ?? this.#argv.appEnv ?? process.env.APP_ENV ?? 'production';
   }
 
   get appVersion() {
-    return getAppVersion(this.#env, this.#argv);
+    return this.#env.APP_VERSION ?? this.#argv.appVersion ?? process.env.APP_VERSION ?? process.env.npm_package_version ?? execSync('git rev-parse HEAD').toString().trim(); // eslint-disable-line sonarjs/no-os-command-from-path
   }
 
   get appName() {
-    return getAppName(this.#env, this.#argv);
+    return this.#env.APP_NAME ?? this.#argv.appName ?? process.env.APP_NAME ?? process.env.npm_package_name ?? 'webpack-stack';
   }
 }

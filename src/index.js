@@ -11,8 +11,5 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-export * from './base.js';
 export * from './builder.js';
-export * from './env.js';
-export * from './plugins.js';
 export * as WebpackStackPresets from './presets.js';
