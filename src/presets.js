@@ -15,18 +15,13 @@ import { WebpackStack } from './builder.js';
 
 export function base(env, argv, options = {}) {
   const {
-    entry = {
-      index: ['./src/index.ts'],
-    },
     brotli = true,
     gzip = true,
     environment = true,
     define = true,
-    html = false,
-    copy = false,
   } = options;
 
-  let config = WebpackStack.create(env, argv).base().entry(entry);
+  let config = WebpackStack.create(env, argv).base();
 
   if (environment) {
     config = config.baseEnvironment();
@@ -44,14 +39,6 @@ export function base(env, argv, options = {}) {
     if (gzip) {
       config = config.gzip();
     }
-  }
-
-  if (html) {
-    config = config.html();
-  }
-
-  if (copy) {
-    config = config.copy();
   }
 
   return config;
