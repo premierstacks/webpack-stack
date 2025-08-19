@@ -11,4 +11,4 @@
  * @see {@link https://github.com/sponsors/tomchochola} GitHub Sponsors
  */
 
-export * from './builder.js';
+export * from './WebpackStack.js';

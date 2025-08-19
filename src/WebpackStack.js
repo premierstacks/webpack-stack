@@ -22,17 +22,16 @@ import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import webpack from 'webpack';
 import { constants } from 'zlib';
-import * as presets from './presets.js';
 
 export class WebpackStack {
-  #env;
-  #argv;
-  #config;
+  env;
+  argv;
+  config;
 
   constructor(env, argv, config) {
-    this.#env = env;
-    this.#argv = argv;
-    this.#config = config;
+    this.env = env;
+    this.argv = argv;
+    this.config = config;
   }
 
   static create(env, argv) {
@@ -47,7 +46,7 @@ export class WebpackStack {
       define = true,
     } = preset;
 
-    let config = this.create(env, argv);
+    let config = this.create(env, argv).base();
 
     if (config.isProduction) {
       if (brotli) {
@@ -289,8 +288,8 @@ export class WebpackStack {
       },
     };
 
-    return new this.constructor(this.#env, this.#argv, {
-      ...this.#config,
+    return new this.constructor(this.env, this.argv, {
+      ...this.config,
       ...defaults,
       ...options,
     });
@@ -306,10 +305,10 @@ export class WebpackStack {
       ],
     };
 
-    return new this.constructor(this.#env, this.#argv, {
-      ...this.#config,
+    return new this.constructor(this.env, this.argv, {
+      ...this.config,
       plugins: [
-        ...this.#config.plugins,
+        ...this.config.plugins,
         new CopyPlugin({
           ...defaults,
           ...options,
@@ -328,10 +327,10 @@ export class WebpackStack {
       publicPath: '/',
     };
 
-    return new this.constructor(this.#env, this.#argv, {
-      ...this.#config,
+    return new this.constructor(this.env, this.argv, {
+      ...this.config,
       plugins: [
-        ...this.#config.plugins,
+        ...this.config.plugins,
         new HtmlWebpackPlugin({
           ...defaults,
           ...options,
@@ -348,10 +347,10 @@ export class WebpackStack {
       filename: '[path][base].gz[query][fragment]',
     };
 
-    return new this.constructor(this.#env, this.#argv, {
-      ...this.#config,
+    return new this.constructor(this.env, this.argv, {
+      ...this.config,
       plugins: [
-        ...this.#config.plugins,
+        ...this.config.plugins,
         new CompressionPlugin({
           ...defaults,
           ...options,
@@ -368,10 +367,10 @@ export class WebpackStack {
       filename: '[path][base].br[query][fragment]',
     };
 
-    return new this.constructor(this.#env, this.#argv, {
-      ...this.#config,
+    return new this.constructor(this.env, this.argv, {
+      ...this.config,
       plugins: [
-        ...this.#config.plugins,
+        ...this.config.plugins,
         new CompressionPlugin({
           ...defaults,
           ...options,
@@ -381,10 +380,10 @@ export class WebpackStack {
   }
 
   environment(options = {}) {
-    return new this.constructor(this.#env, this.#argv, {
-      ...this.#config,
+    return new this.constructor(this.env, this.argv, {
+      ...this.config,
       plugins: [
-        ...this.#config.plugins,
+        ...this.config.plugins,
         new webpack.EnvironmentPlugin(options),
       ],
     });
@@ -401,10 +400,10 @@ export class WebpackStack {
   }
 
   define(options = {}) {
-    return new this.constructor(this.#env, this.#argv, {
-      ...this.#config,
+    return new this.constructor(this.env, this.argv, {
+      ...this.config,
       plugins: [
-        ...this.#config.plugins,
+        ...this.config.plugins,
         new webpack.DefinePlugin(options),
       ],
     });
@@ -418,25 +417,21 @@ export class WebpackStack {
   }
 
   entry(options = {}) {
-    return new this.constructor(this.#env, this.#argv, {
-      ...this.#config,
+    return new this.constructor(this.env, this.argv, {
+      ...this.config,
       entry: {
-        ...this.#config.entry,
+        ...this.config.entry,
         ...options,
       },
     });
   }
 
   merge(callable) {
-    return new this.constructor(this.#env, this.#argv, callable(this.#env, this.#argv, this.#config));
+    return new this.constructor(this.env, this.argv, callable(this.env, this.argv, this.config));
   }
 
   build() {
-    return this.#config;
-  }
-
-  static get Presets() {
-    return presets;
+    return this.config;
   }
 
   get isProduction() {
@@ -448,34 +443,34 @@ export class WebpackStack {
   }
 
   get isBuild() {
-    return this.#env.WEBPACK_BUILD ?? false;
+    return this.env.WEBPACK_BUILD ?? false;
   }
 
   get isWatched() {
-    return this.#env.WEBPACK_WATCH ?? false;
+    return this.env.WEBPACK_WATCH ?? false;
   }
 
   get isServed() {
-    return this.#env.WEBPACK_SERVE ?? false;
+    return this.env.WEBPACK_SERVE ?? false;
   }
 
   get mode() {
-    return this.#argv.mode ?? 'production';
+    return this.argv.mode ?? 'production';
   }
 
   get nodeEnv() {
-    return this.#argv.nodeEnv ?? 'production';
+    return this.argv.nodeEnv ?? 'production';
   }
 
   get appEnv() {
-    return this.#env.APP_ENV ?? this.#argv.appEnv ?? process.env.APP_ENV ?? 'production';
+    return this.env.APP_ENV ?? this.argv.appEnv ?? process.env.APP_ENV ?? 'production';
   }
 
   get appVersion() {
-    return this.#env.APP_VERSION ?? this.#argv.appVersion ?? process.env.APP_VERSION ?? process.env.npm_package_version ?? execSync('git rev-parse HEAD').toString().trim(); // eslint-disable-line sonarjs/no-os-command-from-path
+    return this.env.APP_VERSION ?? this.argv.appVersion ?? process.env.APP_VERSION ?? process.env.npm_package_version ?? execSync('git rev-parse HEAD').toString().trim(); // eslint-disable-line sonarjs/no-os-command-from-path
   }
 
   get appName() {
-    return this.#env.APP_NAME ?? this.#argv.appName ?? process.env.APP_NAME ?? process.env.npm_package_name ?? 'webpack-stack';
+    return this.env.APP_NAME ?? this.argv.appName ?? process.env.APP_NAME ?? process.env.npm_package_name ?? 'webpack-stack';
   }
 }
