@@ -12,4 +12,3 @@
  */
 
 export * from './builder.js';
-export * as WebpackStackPresets from './presets.js';

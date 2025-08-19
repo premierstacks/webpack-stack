@@ -39,6 +39,37 @@ export class WebpackStack {
     return new this(env, argv, {});
   }
 
+  static preset(env, argv, preset = {}) {
+    const {
+      brotli = true,
+      gzip = true,
+      environment = true,
+      define = true,
+    } = preset;
+
+    let config = this.create(env, argv);
+
+    if (config.isProduction) {
+      if (brotli) {
+        config = config.brotli();
+      }
+
+      if (gzip) {
+        config = config.gzip();
+      }
+    }
+
+    if (environment) {
+      config = config.baseEnvironment();
+    }
+
+    if (define) {
+      config = config.baseDefine();
+    }
+
+    return config;
+  }
+
   base(options = {}) {
     const defaults = {
       target: ['web', 'es2020'],
