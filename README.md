@@ -76,7 +76,7 @@ import { WebpackStack } from '@premierstacks/eslint-stack';
 
 Explore the predefined templates for various configurations in the [/templates](/templates) directory. These templates provide quick-start setups for different environments.
 
-**[/templates/browser_typescript_babel_react.template](/templates/browser_typescript_babel_react.template)**<br />
+**[/templates/browser_typescript_babel_react.js](/templates/browser_typescript_babel_react.js)**<br />
 
 ## Getting Started
 
@@ -99,7 +99,7 @@ Choose one of the predefined configuration templates from the [/templates](/temp
 Use the `cp` command to copy it into your project as `/webpack.config.js`:
 
 ```bash
-cp ./node_modules/@premierstacks/webpack-stack/templates/browser_typescript_babel_react.template./webpack.config.js
+cp ./node_modules/@premierstacks/webpack-stack/templates/browser_typescript_babel_react.js./webpack.config.js
 ```
 
 **4. CLI**

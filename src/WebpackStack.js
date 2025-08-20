@@ -34,43 +34,19 @@ export class WebpackStack {
     this.config = config;
   }
 
-  static create(env, argv) {
-    return new this(env, argv, {});
+  static create(env, argv, options = {}) {
+    return new this(env, argv, {
+      ...options,
+    });
   }
 
-  static preset(env, argv, preset = {}) {
-    const {
-      brotli = true,
-      gzip = true,
-      environment = true,
-      define = true,
-    } = preset;
-
-    let config = this.create(env, argv).base();
-
-    if (config.isProduction) {
-      if (brotli) {
-        config = config.brotli();
-      }
-
-      if (gzip) {
-        config = config.gzip();
-      }
-    }
-
-    if (environment) {
-      config = config.baseEnvironment();
-    }
-
-    if (define) {
-      config = config.baseDefine();
-    }
-
-    return config;
+  clone(config) {
+    return new this.constructor(this.env, this.argv, config);
   }
 
   base(options = {}) {
-    const defaults = {
+    return this.clone(this.env, this.argv, {
+      ...this.config,
       target: ['web', 'es2020'],
       output: {
         filename: 'immutable.[contenthash].js',
@@ -286,31 +262,22 @@ export class WebpackStack {
           }),
         ],
       },
-    };
-
-    return new this.constructor(this.env, this.argv, {
-      ...this.config,
-      ...defaults,
       ...options,
     });
   }
 
   copy(options = {}) {
-    const defaults = {
-      patterns: [
-        {
-          from: './public',
-          to: '.',
-        },
-      ],
-    };
-
-    return new this.constructor(this.env, this.argv, {
+    return this.clone(this.env, this.argv, {
       ...this.config,
       plugins: [
         ...this.config.plugins,
         new CopyPlugin({
-          ...defaults,
+          patterns: [
+            {
+              from: './public',
+              to: '.',
+            },
+          ],
           ...options,
         }),
       ],
@@ -318,21 +285,17 @@ export class WebpackStack {
   }
 
   html(options = {}) {
-    const defaults = {
-      template: './node_modules/@premierstacks/webpack-stack/assets/index.html',
-      filename: 'index.html',
-      xhtml: true,
-      inject: true,
-      chunks: 'all',
-      publicPath: '/',
-    };
-
-    return new this.constructor(this.env, this.argv, {
+    return this.clone(this.env, this.argv, {
       ...this.config,
       plugins: [
         ...this.config.plugins,
         new HtmlWebpackPlugin({
-          ...defaults,
+          template: './node_modules/@premierstacks/webpack-stack/assets/index.html',
+          filename: 'index.html',
+          xhtml: true,
+          inject: true,
+          chunks: 'all',
+          publicPath: '/',
           ...options,
         }),
       ],
@@ -340,19 +303,15 @@ export class WebpackStack {
   }
 
   gzip(options = {}) {
-    const defaults = {
-      algorithm: 'gzip',
-      compressionOptions: { level: 9 },
-      minRatio: Infinity,
-      filename: '[path][base].gz[query][fragment]',
-    };
-
-    return new this.constructor(this.env, this.argv, {
+    return this.clone(this.env, this.argv, {
       ...this.config,
       plugins: [
         ...this.config.plugins,
         new CompressionPlugin({
-          ...defaults,
+          algorithm: 'gzip',
+          compressionOptions: { level: 9 },
+          minRatio: Infinity,
+          filename: '[path][base].gz[query][fragment]',
           ...options,
         }),
       ],
@@ -360,64 +319,54 @@ export class WebpackStack {
   }
 
   brotli(options = {}) {
-    const defaults = {
-      algorithm: 'brotliCompress',
-      compressionOptions: { [constants.BROTLI_PARAM_QUALITY]: constants.BROTLI_MAX_QUALITY },
-      minRatio: Infinity,
-      filename: '[path][base].br[query][fragment]',
-    };
-
-    return new this.constructor(this.env, this.argv, {
+    return this.clone(this.env, this.argv, {
       ...this.config,
       plugins: [
         ...this.config.plugins,
         new CompressionPlugin({
-          ...defaults,
+          algorithm: 'brotliCompress',
+          compressionOptions: { [constants.BROTLI_PARAM_QUALITY]: constants.BROTLI_MAX_QUALITY },
+          minRatio: Infinity,
+          filename: '[path][base].br[query][fragment]',
           ...options,
         }),
       ],
     });
   }
 
-  environment(options = {}) {
-    return new this.constructor(this.env, this.argv, {
+  environment(options = {
+    WEBPACK_MODE: this.mode,
+    APP_NAME: this.appName,
+    APP_VERSION: this.appVersion,
+    APP_ENV: this.appEnv,
+  }) {
+    return this.clone(this.env, this.argv, {
       ...this.config,
       plugins: [
         ...this.config.plugins,
-        new webpack.EnvironmentPlugin(options),
+        new webpack.EnvironmentPlugin({
+          ...options,
+        }),
       ],
     });
   }
 
-  baseEnvironment(options = {}) {
-    return this.environment({
-      WEBPACK_MODE: this.mode,
-      APP_NAME: this.appName,
-      APP_VERSION: this.appVersion,
-      APP_ENV: this.appEnv,
-      ...options,
-    });
-  }
-
-  define(options = {}) {
-    return new this.constructor(this.env, this.argv, {
+  define(options = {
+    global: 'globalThis',
+  }) {
+    return this.clone(this.env, this.argv, {
       ...this.config,
       plugins: [
         ...this.config.plugins,
-        new webpack.DefinePlugin(options),
+        new webpack.DefinePlugin({
+          ...options,
+        }),
       ],
-    });
-  }
-
-  baseDefine(options = {}) {
-    return this.define({
-      global: 'globalThis',
-      ...options,
     });
   }
 
   entry(options = {}) {
-    return new this.constructor(this.env, this.argv, {
+    return this.clone(this.env, this.argv, {
       ...this.config,
       entry: {
         ...this.config.entry,
@@ -427,11 +376,11 @@ export class WebpackStack {
   }
 
   merge(callable) {
-    return new this.constructor(this.env, this.argv, callable(this.env, this.argv, this.config));
+    return this.clone(this.env, this.argv, callable(this.env, this.argv, this.config));
   }
 
   build() {
-    return this.config;
+    return { ...this.config };
   }
 
   get isProduction() {

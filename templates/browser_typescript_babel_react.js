@@ -2,10 +2,19 @@ import { WebpackStack } from '@premierstacks/webpack-stack';
 
 // eslint-disable-next-line no-restricted-exports
 export default function (env, argv) {
-  return WebpackStack.preset(env, argv, {
-    brotli: true,
-    gzip: true,
-    environment: true,
-    define: true,
-  }).build();
+  let stack = WebpackStack.create(env, argv)
+    .base()
+    .entry({
+      index: ['./src/index.ts'],
+    })
+    .environment()
+    .define()
+    .html()
+    .copy();
+
+  if (stack.isProduction) {
+    stack = stack.gzip().brotli();
+  }
+
+  return stack.build();
 }
