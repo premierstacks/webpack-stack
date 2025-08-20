@@ -40,8 +40,8 @@ export class WebpackStack {
     });
   }
 
-  clone(config) {
-    return new this.constructor(this.env, this.argv, config);
+  clone(env, argv, config) {
+    return new this.constructor(env, argv, config);
   }
 
   base(options = {}) {
