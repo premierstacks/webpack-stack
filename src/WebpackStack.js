@@ -21,6 +21,7 @@ import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import webpack from 'webpack';
+import WorkboxPlugin from 'workbox-webpack-plugin';
 import { constants } from 'zlib';
 
 export class WebpackStack {
@@ -372,6 +373,39 @@ export class WebpackStack {
         ...this.config.entry,
         ...options,
       },
+    });
+  }
+
+  browserslist(options = {}) {
+    return this.clone(this.env, this.argv, {
+      ...this.config,
+      target: 'browserslist',
+      ...options,
+    });
+  }
+
+  pwa(options = {}) {
+    return this.clone(this.env, this.argv, {
+      ...this.config,
+      plugins: [
+        ...this.config.plugins,
+        new WorkboxPlugin.GenerateSW({
+          clientsClaim: true,
+          skipWaiting: true,
+          cleanupOutdatedCaches: true,
+          maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
+          swDest: 'sw.js',
+          navigateFallback: '/index.html',
+          navigateFallbackDenylist: [
+            /^\/api\//,
+            /^\/admin\//,
+            /^\/otlp\//,
+            /^\/ws\//,
+            /\./,
+          ],
+          ...options,
+        }),
+      ],
     });
   }
 

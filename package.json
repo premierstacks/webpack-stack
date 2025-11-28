@@ -1,24 +1,12 @@
 {
-  "name": "@premierstacks/webpack-stack",
-  "description": "premierstacks webpack stack",
-  "keywords": [
-    "tomchochola",
-    "tomaschochola",
-    "Tomas Chochola",
-    "Tomáš Chochola",
-    "premierstacks",
-    "webpack-stack"
-  ],
-  "homepage": "https://github.com/premierstacks/webpack-stack",
-  "bugs": {
-    "email": "chocholatom1997@gmail.com",
-    "url": "https://github.com/premierstacks/webpack-stack/issues"
-  },
-  "license": "CC-BY-ND-4.0",
   "author": {
     "email": "chocholatom1997@gmail.com",
     "name": "Tomáš Chochola",
     "url": "https://github.com/tomchochola"
+  },
+  "bugs": {
+    "email": "chocholatom1997@gmail.com",
+    "url": "https://github.com/premierstacks/webpack-stack/issues"
   },
   "contributors": [
     {
@@ -27,11 +15,6 @@
       "url": "https://github.com/tomchochola"
     }
   ],
-  "funding": {
-    "type": "github",
-    "url": "https://github.com/sponsors/tomchochola"
-  },
-  "repository": "github:premierstacks/webpack-stack",
   "dependencies": {
     "babel-loader": "^10.0.0",
     "compression-webpack-plugin": "^11.1.0",
@@ -53,15 +36,31 @@
     "webpack": "^5.101.3",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.2"
+    "webpack-dev-server": "^5.2.2",
+    "workbox-webpack-plugin": "^7.4.0"
   },
+  "description": "premierstacks webpack stack",
   "devDependencies": {
     "@premierstacks/eslint-stack": "github:premierstacks/eslint-stack#main",
     "@premierstacks/prettier-stack": "github:premierstacks/prettier-stack#main"
   },
-  "type": "module",
-  "sideEffects": false,
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/tomchochola"
+  },
+  "homepage": "https://github.com/premierstacks/webpack-stack",
+  "keywords": [
+    "tomchochola",
+    "tomaschochola",
+    "Tomas Chochola",
+    "Tomáš Chochola",
+    "premierstacks",
+    "webpack-stack"
+  ],
+  "license": "CC-BY-ND-4.0",
   "main": "./src/index.js",
+  "name": "@premierstacks/webpack-stack",
+  "repository": "github:premierstacks/webpack-stack",
   "scripts": {
     "check": "npm run lint && npm run security",
     "clean": "npm run clean:npm",
@@ -78,5 +77,7 @@
     "npm:install": "npm install --install-links --include prod --include dev --include peer --include optional --ignore-scripts",
     "npm:update": "npm update --install-links --include prod --include dev --include peer --include optional --ignore-scripts",
     "security": "npm run npm:audit"
-  }
+  },
+  "sideEffects": false,
+  "type": "module"
 }
